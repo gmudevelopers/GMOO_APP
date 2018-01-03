@@ -40,6 +40,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -104,6 +105,7 @@ public class HomeActivity extends Activity {
     private static final int RC_NEW_DESIGNER_NEWS_STORY = 4;
     private static final int RC_NEW_DESIGNER_NEWS_LOGIN = 5;
 
+    private ActionBarDrawerToggle drawerToggle;
     @BindView(R.id.drawer)
     DrawerLayout drawer;
     @BindView(R.id.toolbar)
@@ -137,7 +139,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+      //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
 
         setActionBar(toolbar);
         if (savedInstanceState == null) {
