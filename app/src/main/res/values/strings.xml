@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2015 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<resources>
+    <!-- firebase -->
+    <!-- strings for database demo activities -->
+    <string name="start_chatting">No messages. Start chatting at the bottom!</string>
+    <string name="signed_in">Signed In</string>
+    <string name="enable_credential_selector">Enable Smart Lock\'s credential selector</string>
+    <string name="enable_hint_selector">Enable Smart Lock\'s hint selector</string>
+<string name="sign_in">Sign In</string>
+    <string name="unknown_error">An unknown error occurred</string>
+    <string name="label_google_sign_in">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+    <string name="default_theme">Default theme</string>
+    <string name="label_facebook_login">Firebase + Facebook Login</string>
+    <string name="desc_facebook_login">Use a Facebook Login credential to authenticate with Firebase.</string>
+
+    <string name="label_twitter_login">Firebase + Twitter Login</string>
+    <string name="desc_twitter_login">Use a Twitter Login credential to authenticate with Firebase.</string>
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+
+    <string name="label_anonymous_auth">Anonymous Authentication</string>
+    <string name="desc_anonymous_auth">Sign in anonymously and then later upgrade to a full Firebase Auth user.</string>
+
+    <string name="label_custom_auth">Custom Authentication</string>
+    <string name="desc_custom_auth">Use a custom token signed by your own server to authenticate with Firebase.</string>
+
+    <string name="label_firebase_ui">FirebaseUI Auth</string>
+    <string name="desc_firebase_ui">Use the FirebaseUI-Android library to authenticate with Firebase.</string>
+
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Get Token</string>
+
+
+    <string name="verify_email">Verify Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="custom_token">Custom Token</string>
+
+    <string name="signed_out">Signed Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="facebook_status_fmt">Facebook User: %s</string>
+    <string name="facebook_title_text">Facebook Login</string>
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Email and Password</string>
+
+    <string name="phone_title_text">Phone Number</string>
+
+    <string name="twitter_status_fmt">Twitter User: %s</string>
+    <string name="twitter_title_text">Twitter Login</string>
+
+    <string name="firebaseui_status_fmt">Firebase User: %s</string>
+    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+    <string name="search_title">search Gmoo</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="error_incorrect_password">Email or password incorrect</string>
+    <string name="error_field_required">Required</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="create_account">Register</string>
+    <string name="action_recover">Recover</string>
+    <string name="remembered_password">Just remembered it?</string>
+    <string name="already_registered">Already have an account? Sign in</string>
+    <string name="prompt_name">UserName</string>
+    <string name="action_register">Register</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="friends">Friends</string>
+    <string name="photos">Photos</string>
+
+
+    <string name="other_options_header">Other Options:</string>
+    <string name="rational_image_perm">This sample will read an image from local storage to upload to Cloud Storage.</string>
+    <string name="anonymous_auth_failed_msg">Anonymous authentication failed, various components of the demo will not work. Make sure your device is online and that Anonymous Auth is configured in your Firebase project(https://console.firebase.google.com/project/_/authentication/providers)</string>
+    <string name="extra_google_scopes">Example extra Google scopes</string>
+    <string name="drive_file_scope">Drive File</string>
+    <string name="youtube_data_scope">Youtube data</string>
+    <string name="extra_facebook_scopes">Example extra Facebook scopes</string>
+
+
+    <string name="action_voice_rec">action voice rec</string>
+    <string name="action_location">action location</string>
+    <string name="action_taxi">action taxi</string>
+    <string name="action_change_colors">change style</string>
+    <string name="color_info">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,</string>
+    <string name="dummy_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum</string>
+    <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_activity_forgot_password">Forgot Password</string>
+    <string name="title_activity_mfa">MFA Code</string>
+    <string name="title_activity_sign_up_confirm">Confirm Account</string>
+    <string name="forgot_password_header">Forgot your password?</string>
+    <string name="forgot_password_body">Set your new password with the verification code that was sent to you.</string>
+    <string name="forgot_password_input_code_hint">Verification code</string>
+    <string name="forgot_password_button_hint">Set password</string>
+    <string name="mfa_header">MFA verification is required to authenticate.</string>
+    <string name="mfa_code_sent_message">Code sent.</string>
+    <string name="verify_button_text">Verify</string>
+    <string name="username_text">Username</string>
+    <string name="given_name_text">Given name</string>
+    <string name="email_address_text">Email address</string>
+    <string name="phone_number_text">Phone number (+15551234567)</string>
+    <string name="sign_up_header">Enter the following information to sign up.</string>
+    <string name="sign_up_confirm_code">Confirmation code</string>
+    <string name="sign_up_confirm_text">Confirm</string>
+    <string name="sign_up_confirm_code_sent">A confirmation code was sent.</string>
+    <string name="sign_up_confirm_enter_code">Please enter the code below to confirm your account.</string>
+    <string name="sign_up_confirm_title">Confirm your account</string>
+    <string name="password_change_success">Password change succeeded.</string>
+    <string name="password_change_failed">Password change failed.</string>
+    <string name="sign_up_success">Sign up succeeded.</string>
+    <string name="sign_up_failed">Sign up failed.</string>
+    <string name="login_success">Login succeeded.</string>
+    <string name="login_failed">Login failed.</string>
+    <string name="sign_up_confirm_success">Sign up confirmation succeeded.</string>
+    <string name="sign_up_confirm_failed">Sign up confirmation failed.</string>
+    <string name="title_activity_post_offer_uploadphoto">PostOffer_uploadphoto</string>
+    <string name="shutterstock_base_url">"https://api.shutterstock.com"</string>
+    <string name="shutterstock_list_categories_endpoint">"/v2/images/categories"</string>
+    <string name="shutterstock_get_all_in_category_endpoint">"/v2/images/search?category=%1$s&amp;per_page=%2$s"</string>
+    <string name="shutterstock_search_query_endpoint">"/v2/images/search?query=%1$s&amp;per_page=%2$s"</string>
+    <string name="action_search">SEARCH</string>
+    <string name="no_content">No images found.</string>
+    <string name="title_activity_upload_add_addphotos">UploadAdd_addphotos</string>
+    <string name="delete_account_failed">Delete account failed</string>
+    <string name="sign_out_failed">Sign out failed</string>
+    <string name="signed_in_header">You are signed in!</string>
+    <string name="sign_out">Sign out</string>
+    <string name="delete_account_label">Delete account</string>
+    <string name="user_profile_header">User profile:</string>
+    <string name="profile_picture_content_desc">Profile picture</string>
+    <string name="idp_token">IDP Token</string>
+    <string name="idp_secret">IDP Secret</string>
+    <string name="launch_title">FirebaseUI Auth Demo</string>
+
+
+    <string name="green_theme">Green Theme</string>
+    <string name="purple_theme">Purple Theme</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="use_theme_header">Use theme:</string>
+    <string name="logo_header">Logo:</string>
+    <string name="firebase_logo_label">Firebase Auth</string>
+    <string name="google_logo_label">Google</string>
+    <string name="no_logo_label">None</string>
+    <string name="auth_providers_header">Use auth providers:</string>
+    <string name="email_label">Email</string>
+    <string name="phone_label">Phone</string>
+    <string name="facebook_label">Facebook</string>
+    <string name="facebook_label_missing_config">Facebook - configuration missing</string>
+    <string name="twitter_label">Twitter</string>
+    <string name="twitter_label_missing_config">Twitter - configuration missing</string>
+    <string name="google_label">Google</string>
+
+    <string name="google_tos_label">Google TOS</string>
+    <string name="firebase_tos_label">Firebase TOS</string>
+    <string name="google_privacy_label">Google Privacy Policy</string>
+    <string name="firebase_privacy_label">Firebase Privacy Policy</string>
+    <string name="tos_header">Terms of Service URL:</string>
+    <string name="privacy_policy_header">Privacy Policy URL:</string>
+    <string name="unknown_response">Unexpected onActivityResult response code</string>
+    <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in</string>
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="no_internet_connection">No internet connection</string>
+
+    <!-- global -->
+    <string name="app_name">Plaid</string>
+    <string name="no_comments">No comments</string>
+    <string name="login_to">Log in to</string>
+    <string name="need_login">Woah there chief. First you\'ll need&#160;to</string> <!-- &#160; == nbsp -->
+    <string name="dribbble_logged_in_as">Logged in as</string>
+    <string name="comment">Comment</string>
+    <string name="hint_reply">Reply</string>
+
+    <!-- main screen -->
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
+    <string name="about">About</string>
+    <string name="dribbble_login">Log in to Dribbble</string>
+    <string name="dribbble_log_out">Log out of Dribbble</string>
+    <string name="dribbble_logged_out">Logged out of Dribbble</string>
+    <string name="designer_news_login">Log in to Designer News</string>
+    <string name="designer_news_log_out">Log out of Designer News</string>
+    <string name="designer_news_logged_out">Logged out of Designer News</string>
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+    <string name="no_filters_selected">No filters selected, press the filter button above (&#2228;)\nor swipe from the&#160;right</string>
+
+    <!-- data sources / filters -->
+    <string name="source_browse">Browse</string>
+    <string name="source_sell_your_stuff">Sell Your Stuff</string>
+    <string name="source_chat">Chat</string>
+    <string name="source_categories">Categories</string>
+    <string name="source_my_profile">My profile</string>
+    <string name="source_logout">Log out</string>
+    <string name="source_help">Help</string>
+    <string name="source_dribbble_debuts">Dribbble Debuts</string>
+    <string name="source_dribbble_animated">Dribbble Animated</string>
+    <string name="source_dribbble_search_material_design">Material Design</string>
+    <string name="source_product_hunt">Product Hunt</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search Dribbble &amp; Designer News</string>
+    <string name="no_search_results">No results for\n“%1$s”</string>
+    <string name="confirm_save_dribbble_search">Save Dribbble</string>
+    <string name="confirm_save_designer_news_search">Save Designer News</string>
+    <string name="confirm_save_search">Save</string>
+
+    <!-- new designer news story -->
+    <string name="new_story_title">Post a story to Designer News</string>
+    <string name="new_story_instructions">Submit a link or provide a comment to start a discussion.</string>
+    <string name="new_story_link_or_comment">Include a link <b>or</b> a comment</string>
+    <string name="new_story_post_title">Post title</string>
+    <string name="new_story_url">Url</string>
+    <string name="new_story_url_hint">Link</string>
+    <string name="new_story_post">Post</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- designer news login -->
+    <string name="username">Username</string>
+    <string name="get_accounts_permission_primer_message">Autocomplete email addresses</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="dn_login_action">Log in</string>
+
+
+
+
+    <!-- designer news story -->
+    <string name="upvote_story">Upvote story</string>
+    <!-- using strings for the number of views/likes as we run them through NumberFormat -->
+    <plurals name="upvotes">
+        <item quantity="zero">no upvotes</item>
+        <item quantity="one">%s upvote</item>
+        <item quantity="other">%s upvotes</item>
+    </plurals>
+
+
+    <!-- dribbble shot screen -->
+    <!-- using strings for the number of views/likes as we run them through NumberFormat -->
+    <plurals name="likes">
+        <item quantity="zero">no likes</item>
+        <item quantity="one">%s like</item>
+        <item quantity="other">%s likes</item>
+    </plurals>
+    <plurals name="views">
+        <item quantity="zero">no views</item>
+        <item quantity="one">%s view</item>
+        <item quantity="other">%s views</item>
+    </plurals>
+    <string name="share">share</string>
+    <string name="prospects_cant_post">Sorry but prospects cannot comment :(</string>
+    <string name="bad_dribbble_shot_url">Can\'t open that link :(</string>
+
+    <!-- dribbble player -->
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
+    <plurals name="shots">
+        <item quantity="zero">no shots</item>
+        <item quantity="one">%s shot</item>
+        <item quantity="other">%s shots</item>
+    </plurals>
+    <plurals name="follower_count">
+        <item quantity="zero">no followers</item>
+        <item quantity="one">%s follower</item>
+        <item quantity="other">%s followers</item>
+    </plurals>
+
+    <!-- dribbble player sheet -->
+    <plurals name="fans">
+        <item quantity="zero">No Fans</item>
+        <item quantity="one">%s Fan</item>
+        <item quantity="other">%s Fans</item>
+    </plurals>
+
+    <!-- about screen -->
+    <string name="about_plaid_0">Plaid is a source of design news &amp; inspiration that serves as a concrete example of [material design principles](https://www.google.com/design/spec/material-design/introduction.html#introduction-principles). Plaid pulls data from [Designer News](https://www.designernews.co/), [Dribbble](https://dribbble.com/) &amp; [Product Hunt](https://www.producthunt.com/); it is in no way an official client for these services nor endorsed by them. It is rather good&#160;though.</string>
+    <string name="about_plaid_1">Plaid is written by Nick&#160;Butcher</string>
+    <string name="about_plaid_2">[Twitter](http://twitter.com/crafty) | [Google+](http://google.com/+NickButcher)</string>
+    <string name="about_plaid_3">The source code is available on [GitHub](http://github.com/nickbutcher/plaid)</string>
+    <string name="about_icon_0">"Plaid\'s icon is lovingly crafted by the inimitable Roman&#160;Nurik"</string>
+    <string name="about_icon_1">[Twitter](http://twitter.com/romannurik) | [Google+](http://google.com/+RomanNurik)</string>
+    <string name="about_libs_intro">Plaid is built with the help of these awesome&#160;libraries</string>
+    <string name="about_lib_link">website</string>
+
+    <!-- app shortcuts -->
+    <string name="shortcut_search_short_label">@string/search</string>
+    <string name="shortcut_search_long_label">@string/search</string>
+    <string name="shortcut_search_disabled">Search not available</string>
+    <string name="shortcut_post_short_label">New Story</string>
+    <string name="shortcut_post_long_label">New Designer News story</string>
+    <string name="shortcut_post_disabled">Log in to Designer News to post a new story</string>
+
+    <!-- transition shared elements -->
+    <string name="transition_shot" translatable="false">shot</string>
+    <string name="transition_shot_title" translatable="false">shot_title</string>
+    <string name="transition_shot_background" translatable="false">shot_background</string>
+    <string name="transition_story_title" translatable="false">story_title</string>
+    <string name="transition_story_title_background" translatable="false">story_title_background</string>
+    <string name="transition_story_background" translatable="false">transition_story_background</string>
+    <string name="transition_dribbble_login" translatable="false">dribbble_login</string>
+    <string name="transition_designer_news_login" translatable="false">transition_designer_news_login</string>
+    <string name="transition_new_designer_news_post" translatable="false">new_designer_news_post</string>
+    <string name="transition_player_avatar" translatable="false">transition_player_avatar</string>
+    <string name="transition_player_background" translatable="false">transition_player_background</string>
+    <string name="transition_search_back" translatable="false">transition_search_back</string>
+
+    <string name="comment_likes_count">0</string>
+    <string name="google_label_missing_config">missing configuration</string>
+    <string name="configuration_required">configuration required</string>
+
+
+
+
+    <string name="action_add_favourite">Add to Favourites</string>
+    <string name="action_play_next">Play Next</string>
+    <string name="backdrop_title">LOVE MUSIC</string>
+    <string name="backdrop_subtitle">This season top 20 albums</string>
+
+    <string name="download_queue_provider_authority">com.amazonaws.mobile.downloader-com.amazon.mysampleapp</string>
+    <!-- This can be anything, but it should be unique to the app. -->
+    <string name="content_file_provider_authority">com.mysampleapp.fileprovider</string>
+
+    <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_main">MainActivity</string>
+
+    <string-array name="condition">
+        <item>used</item>
+        <item>new</item>
+        <item>normal wear and tear</item>
+
+    </string-array>
+    <string name="main_nav_menu_item_home">Home</string>
+    <string name="title_activity_item_detail">Item Detail</string>
+    <string name="title_activity_item_list">Item List</string>
+
+    <string name="title_activity_sign_in">Sign-in</string>
+    <string name="button_text_sign_in">SIGN IN</string>
+    <string name="button_text_sign_out">SIGN OUT</string>
+    <string name="content_helper_error_title">No Content Viewer</string>
+    <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
+
+
+    <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
+
+    <string name="fragment_demo_instruction_overview_header">Overview</string>
+    <string name="fragment_demo_instruction_description_header">Sample App Features</string>
+    <string name="feature_sign_in_title">User Sign-in</string>
+    <string name="feature_sign_in_subtitle">Let your users sign in with public identity providers or your own identity system.</string>
+    <string name="feature_sign_in_overview">Whether your users sign in or not, the User sign-in feature configures Amazon Cognito to uniquely identify the user and provide your app the appropriate credentials to access your AWS resources.</string>
+    <string name="feature_sign_in_description">The Sample App demonstrates assignment of a unique identifier for the user, the Amazon Cognito User ID. If optional or mandatory User Sign-in has been enabled in your project, then the Sample App also includes a sign-in screen, with a button for each configured sign-in provider.</string>
+    <string name="feature_sign_in_powered_by">Powered by Amazon Cognito</string>
+    <string name="feature_sign_in_demo_button">Demo User Identity</string>
+    <string name="feature_user_data_storage_title">User Data Storage</string>
+    <string name="feature_user_data_storage_subtitle">Store files for your users in the cloud.\nStore and sync user data in key/value pairs.</string>
+    <string name="feature_user_data_storage_overview">Store user files such as photos in the cloud. Save user data in key/value pairs and sync across devices that are signed-in with the same user.</string>
+    <string name="feature_user_data_storage_description">The Sample App demonstrates User File Storage and User Profile Data. The User File Storage demonstration includes a remote file explorer, which allows you to upload and download files from your Amazon S3 bucket. You will have access to two folders, a public folder where files are accessible to all users and a private folder where files are only accessible by the current app user.\n\nThe User Profile Data demonstration stores an app color theme using Amazon Cognito Sync and synchronizes that data across all of the user\'s devices as key/value pairs.</string>
+    <string name="feature_user_data_storage_powered_by">Powered by Amazon Cognito and Amazon S3</string>
+    <string name="feature_user_data_storage_demo_button_user_file_storage">Demo User File Storage</string>
+    <string name="feature_user_data_storage_demo_button_user_settings">Demo User Profile Data</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="accessibility_downloaded_image">Downloaded image</string>
+    <string name="allow_new_email_acccount">Allow account creation if email does not exist.</string>
+
+    <string name="main_fragment_title_user_identity">User Identity</string>
+    <string name="main_fragment_subtitle_user_identity">Keep track of users</string>
+    <string name="identity_demo_text_view_description">Displays the user identity.</string>
+    <string name="unknown_user">Guest User</string>
+    <string name="user_id">USER IDENTIFIER</string>
+    <string name="identity_demo_textview_username_description">User\'s name</string>
+    <string name="identity_demo_textview_userid_description">User\'s unique identifier</string>
+    <string name="identity_demo_unknown_identity_text">&lt;UNKNOWN IDENTITY&gt;</string>
+    <string name="identity_demo_dialog_dismiss_text">DISMISS</string>
+    <string name="identity_demo_error_dialog_title">Failed Identity Retrieval</string>
+    <string name="identity_demo_error_message_failed_get_identity">Could not retrieve the user identity:\u0020</string>
+    <string name="content_dialog_ok">OK</string>
+    <string name="content_cache_summary_text">Cache Summary</string>
+    <string name="content_cache_limit_text">Limit</string>
+    <string name="content_cache_use_text">In Use</string>
+    <string name="content_cache_available_text">Available</string>
+    <string name="content_cache_pinned_text">Pinned</string>
+    <string name="content_refresh_text">Refresh</string>
+    <string name="content_download_recent_text">Download Recent</string>
+    <string name="content_set_cache_size_text">Set Cache Size</string>
+    <string name="content_clear_cache_text">Clear Cache</string>
+    <string name="content_path_prefix_text">Path:\u0020</string>
+    <string name="content_folder_text">This is a folder.</string>
+    <string name="content_context_menu_open">Open</string>
+    <string name="content_context_menu_open_remote">Open Remote URL</string>
+    <string name="content_context_menu_download">Download</string>
+    <string name="content_context_menu_download_latest">Download Latest Version</string>
+    <string name="content_context_menu_pin">Pin</string>
+    <string name="content_context_menu_download_pin">Download &amp; Pin</string>
+    <string name="content_context_menu_unpin">Unpin</string>
+    <string name="content_context_menu_delete_local">Delete Local Copy</string>
+    <string name="content_progress_dialog_title_wait">Please wait &#8230;</string>
+    <string name="content_progress_dialog_message_load_local_content">Loading local content</string>
+    <string name="content_progress_dialog_message_load_content">Loading S3 objects list</string>
+    <string name="content_list_failure_text">Failure Listing Content</string>
+    <string name="content_transfer_failure_text">Transfer Failure</string>
+    <string name="content_removal_error_text">Content Removal Error</string>
+    <string name="content_permission_failure_title_text">Permission Failure</string>
+    <string name="content_permission_failure_text">Denial of Read External Storage Permission has disabled the ability to upload user files.</string>
+    <string name="main_fragment_title_user_files">User Files</string>
+    <string name="main_fragment_subtitle_user_files">Store and access files for your users.</string>
+    <string name="user_files_demo_button_public">PUBLIC</string>
+    <string name="user_files_demo_button_private">PRIVATE</string>
+    <string name="user_files_demo_dialog_no_signin_message">Private user file storage is only available to users who are signed-in. Sign-in is not turned on in the app.</string>
+    <string name="user_files_browser_upload_text">Upload</string>
+    <string name="user_files_browser_new_folder_text">New Folder</string>
+    <string name="user_files_browser_context_menu_delete">Delete Remote File</string>
+    <string name="user_files_browser_dialog_create_folder_title">New folder</string>
+    <string name="user_files_browser_progress_dialog_message_create_folder">Creating folder \'%s\'</string>
+    <string name="user_files_browser_progress_dialog_message_delete_item">Deleting \'%s\'</string>
+    <string name="user_files_browser_progress_dialog_message_upload_file">Uploading file \'%s\'</string>
+    <string name="user_files_browser_progress_dialog_message_download_item">Downloading item \'%s\'</string>
+    <string name="user_files_browser_error_message_create_folder">Failed to create folder due to \'%s\'.</string>
+    <string name="user_files_browser_error_message_delete_item">Failed to delete item due to \'%s\'.</string>
+    <string name="user_files_browser_error_message_download_item">Failed to download item due to \'%s\'.</string>
+    <string name="user_files_browser_error_message_upload_file">Failed to upload file due to \'%s\'.</string>
+    <string name="main_fragment_title_user_settings">User Profile Data</string>
+    <string name="settings_fragment_dialog_title">Please wait &#8230;</string>
+    <string name="settings_fragment_dialog_message">Loading&#8230;</string>
+    <string name="settings_fragment_prompt">Please choose a theme:</string>
+    <string name="feature_nosql_database_title">NoSQL Database</string>
+    <string name="feature_nosql_database_subtitle">Store data in the cloud.</string>
+    <string name="feature_nosql_database_overview">Store data in the cloud.</string>
+    <string name="feature_nosql_database_description">The Sample App demonstrates how to access your configured Amazon DynamoDB NoSQL database tables. Select your table, insert sample data, and perform queries by choosing from a list of examples. Hold down an item in query results to update or delete the item. When you\'re done with the demo, you can remove the sample data from your table.</string>
+    <string name="feature_nosql_database_powered_by">Powered by Amazon DynamoDB</string>
+
+    <string name="main_fragment_title_nosql_database">NoSQL Database</string>
+    <string name="feature_nosql_database_demo_button">Demo NoSQL Database</string>
+
+    <string name="main_fragment_title_nosql_select_operation">NoSQL Demo: %s</string>
+    <string name="main_fragment_title_nosql_select_table">NoSQL Demo: Select Table</string>
+
+    <string name="nosql_select_table_item_partition_key_text">Partition Key</string>
+    <string name="nosql_select_table_item_sort_key_text">Sort Key</string>
+    <string name="nosql_select_table_index_count_text">Indexes</string>
+
+    <string name="nosql_dialog_title_failed_dynamodb_describe_table_text">Failed retrieving schema for table \'%s\'.</string>
+    <string name="nosql_dialog_title_failed_operation_text">Operation Failed</string>
+    <string name="nosql_dialog_title_failed_loading_more_results">Failed Loading More Results</string>
+    <string name="nosql_dialog_title_failed_update_item_text">Update Item Failed</string>
+    <string name="nosql_dialog_title_failed_delete_item_text">Delete Item Failed</string>
+
+    <string name="nosql_database_table_item_creation_date_text">Created %s</string>
+    <string name="nosql_insert_sample_data_button_text">INSERT SAMPLE DATA</string>
+    <string name="nosql_remove_sample_data_button_text">REMOVE SAMPLE DATA</string>
+
+    <!-- TODO: use the following confirmation message -->
+    <string name="nosql_dialog_title_remove_confirmation">Confirm Removal of Sample Items</string>
+    <string name="nosql_dialog_message_remove_confirmation">This will remove all your sample items.  Are you sure?</string>
+
+    <string name="nosql_dialog_title_added_sample_data_text">Added Sample Data</string>
+    <string name="nosql_dialog_message_added_sample_data_text">20 Sample Items with random data were added to your table.</string>
+    <string name="nosql_dialog_title_removed_sample_data_text">Removed Sample Data</string>
+    <string name="nosql_dialog_message_removed_sample_data_text">All Sample Items have been removed from your table.</string>
+    <string name="nosql_dialog_ok_text">OK</string>
+
+    <!-- NoSQL Demo Operations Headers -->
+    <string name="nosql_operation_header_get">Get</string>
+    <string name="nosql_operation_header_primary_queries">Primary Index Queries</string>
+    <string name="nosql_operation_header_secondary_queries">Secondary Index Queries (%s)</string>
+    string>
+    <string name="nosql_operation_header_scan">Scan</string>string>
+    <!-- NoSQL Demo Get Operations -->
+    <string name="nosql_operation_get_by_partition_text">Get Item</string>
+    <string name="nosql_operation_example_get_by_partition_text">Find Item with %1$s = \'%2$s\'.</string>
+
+    <string name="nosql_operation_get_by_partition_and_sort_text">Get Item</string>
+    <string name="nosql_operation_example_get_by_partition_and_sort_text">Find Item with %1$s = \'%2$s\' and %3$s = \'%4$s\'.</string>
+
+    <!-- NoSQL Demo Query Operations -->
+    <string name="nosql_operation_title_query_by_partition_and_sort_condition_text">Query by Partition Key and Sort Condition</string>
+    <string name="nosql_operation_example_query_by_partition_and_sort_condition_text">Find all items with %1$s = \'%2$s\' and %3$s &lt; \'%4$s\'.</string>
+
+    <string name="nosql_operation_title_query_by_partition_text">Query by Partition Key</string>
+    <string name="nosql_operation_example_query_by_partition_text">Find all items with %1$s = \'%2$s\'.</string>
+
+    <string name="nosql_operation_title_query_by_partition_and_filter_text">Query by Partition Key and Filter</string>
+    <string name="nosql_operation_example_query_by_partition_and_filter_text">Find all items with %1$s = \'%2$s\' and %3$s &gt; \'%4$s\'.</string>
+
+    <string name="nosql_operation_title_query_by_partition_sort_condition_and_filter_text">Query by Partition Key, Sort Condition, and Filter</string>
+    <string name="nosql_operation_example_query_by_partition_sort_condition_and_filter_text">Find all items with %1$s = \'%2$s\', %3$s &lt; \'%4$s\', and %5$s &gt; \'%6$s\'.</string>
+
+    <string name="nosql_operation_title_index_query_by_partition_and_sort_condition_text">Query by Partition Key and Sort Condition</string>
+    <string name="nosql_operation_example_index_query_by_partition_and_sort_condition_text">Find all items with %1$s = \'%2$s\' and %3$s &gt; \'%4$s\'.</string>
+
+    <string name="nosql_operation_title_index_query_by_partition_text">Query by Partition Key</string>
+    <string name="nosql_operation_example_index_query_by_partition_text">Find all items with %1$s = \'%2$s\'.</string>
+
+    <string name="nosql_operation_title_index_query_by_partition_and_filter_text">Query by Partition Key and Filter</string>
+    <string name="nosql_operation_example_index_query_by_partition_and_filter_text">Find all items with %1$s = \'%2$s\' and %3$s &gt; \'%4$s\'.</string>
+
+    <string name="nosql_operation_title_index_query_by_partition_sort_condition_and_filter_text">Query by Partition Key, Sort Condition, and Filter</string>
+    <string name="nosql_operation_example_index_query_by_partition_sort_condition_and_filter_text">Find all items with %1$s = \'%2$s\', %3$s &lt; \'%4$s\', and %5$s &gt; \'%6$s\'.</string>
+
+    <string name="nosql_operation_title_scan_with_filter">Scan with Filter</string>
+    <string name="nosql_operation_example_scan_with_filter">Find all items with \'%1$s\' &gt; \'%2$s\'.</string>
+    <string name="nosql_operation_example_scan_with_filter_on_partition_and_sort">Find all items with \'%1$s\' beginning with \'%2$s\' and \'%3$s\' beginning with \'%4$s\'.</string>
+    <string name="nosql_operation_example_scan_with_filter_on_partition">Find all items with \'%1$s\' beginning with \'%2$s\'</string>
+
+    <string name="nosql_operation_title_scan_without_filter">Scan</string>
+    <string name="nosql_operation_example_scan_without_filter">Show all items in the table.</string>
+
+    <string name="nosql_dialog_title_pending_results_text">Please wait&#8230;</string>
+    <string name="nosql_dialog_message_pending_results_text">Waiting for the response to load the results.</string>
+
+    <string name="nosql_dialog_title_scan_warning_text">WARNING: Scan is Expensive</string>
+    <string name="nosql_dialog_message_scan_warning_text">This operation scans the entire table and should not generally be used in a production app.</string>
+
+    <string name="nosql_dialog_title_no_results_text">No Matching Items Found</string>
+    <string name="nosql_dialog_message_no_results_text">No items match your criteria. Insert more sample data and try again.</string>
+
+    <string name="nosql_context_menu_title_for_results_text">Update or Delete Item</string>
+    <string name="nosql_context_menu_entry_update_item_text">Update Item</string>
+    <string name="nosql_context_menu_entry_delete_item_text">Delete Item</string>
+    <string name="nosql_dialog_title_confirm_update_item_text">Confirm Update</string>
+    <string name="nosql_dialog_message_confirm_update_item_text">Are you sure you want to update the selected item?</string>
+    <string name="nosql_dialog_title_confirm_delete_item_text">Confirm Delete</string>
+    <string name="nosql_dialog_message_confirm_delete_item_text">Are you sure you want to delete the selected item?</string>
+
+
+
+    <string name="inbox">Inbox</string>
+    <string name="starred">Starred</string>
+    <string name="sent_mail">Sent Mail</string>
+    <string name="drafts">Drafts</string>
+    <string name="categories">Categories</string>
+    <string name="trash">Trash</string>
+    <string name="spam">Spam</string>
+    <string name="settings">Settings</string>
+
+
+
+    <string name="important">Important</string>
+    <string name="documents">Documents</string>
+
+    <!-- Toast -->
+    <string name="open_user_profile">Open user profile</string>
+    <string name="open_settings">Open settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="photo">photo</string>
+    <string name="upload_photo">upload photo</string>
+    <string name="upload_pic">upload photo</string>
+    <string name="edit_personal_info">edit info</string>
+    <string name="take_picture">take photo</string>
+    <string name="select_local_picture">select picture</string>
+    <string name="cancel">cancel</string>
+    <string name="internet_fail_connect">failed to connect</string>
+    <string name="uploading">uploading</string>
+    <string name="choose_upload">choose upload</string>
+    <string name="no_more_than_3">No more tha three</string>
+    <string name="upload">uploaded</string>
+    <string name="publish_theme_sucess">successfully uploaded</string>
+    <string name="publish_theme_failure">unable to upload </string>
+    <string name="playing">playing</string>
+    <string name="detail">Details</string>
+    <string name="input_theme_comment_title">title</string>
+    <string name="input_theme_comment_desc">Enter Discription</string>
+    <string name="publish_theme_after_login">Login</string>
+    <string name="select_category">select category</string>
+
+    <string name="sheet_title_text">This is a persistent Bottom Sheet</string>
+    <string name="sheet_subtitle_text">You can show the rest of this sheet by sliding up.</string>
+    <string name="sheet_more_text">As you can see this is the extra content that you can show to the users after sliding this bottom sheet.</string>
+    <string name="simple_explanation">This is an example activity to test bottom sheets which is added to the Android Support Library at v23.2.0</string>
+    <string name="simple_explanation_details">There are two types of bottom sheets:\n\nPersistent bottom sheets: it is always shown as you can see it below.\n\nModal bottom sheets: it is alternative to menus or simple dialogs. You can test it by clicking the button below.</string>
+    <string name="show_bottom_sheet_modal">Show Bottom Sheet Modal</string>
+
+    <string name="uploadb">Upload</string>
+    <string name="copy">Copy</string>
+    <string name="print">Print</string>
+
+
+    <string name="lorem_ipsum">\nWe aim to provide customers with eco-friendly services through the use of nature cleaning product and to ensure that that the quality of human life and our environment endures for future generations.\n\nWe encourage people who are allergic to harsh cleaning products, people with chronic illness, sensitive skin and asthma to join our go green team.
+</string>
+
+
+    <string name="article_detail_more_info">What are you selling? ( name, model, version etc) for example: iphone 5s 64gb for sale</string>
+
+    <string name="proofess">\nDescribe your listing \n Condition, Let the world know what your product is about</string>
+    <string name="title_of_add">\nWhat are you selling? \n ( name, model, version etc) for example: iphone 5s 64gb for sale</string>
+    <string name="samples_title">Hello title</string>
+    <string name="samples_subhead">Hello Subhead</string>
+    <string name="samples_hint_username">Username</string>
+    <string name="samples_hint_email">E-Mail</string>
+
+
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+
+    <string name="title_activity_register">RegisterActivity</string>
+
+    <string name="title_activity_forgot">ForgotPassActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="facebook_app_id" translatable="false">1381637161909568</string>
+    <string name="fb_login_protocol_scheme">fb1381637161909568</string>
+    <!-- Strings related to login -->
+
+    <string name="different_login">or</string>
+    <string name="plus_sign_out">Change Google+ account</string>
+    <string name="plus_disconnect">Disconnect from Google+</string>
+    <string name="error_invalid_email">Invalid Email</string>
+    <string name="error_invalid_password">The password is too short</string>
+
+
+
+    <!-- Suffix after '-' must be the app package name as specified in the build.gradle file. This
+          is used by the com.amazonaws.mobile.downloader.query.DownloadQueueProvider class. -->
+
+
+    <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
+
+
+    <string name="sign_in_email">Email</string>
+    <string name="sign_in_username">Username/Phone Number (+15551234567)</string>
+    <string name="sign_in_password">Password</string>
+    <string name="sign_in_new_account">Create New Account</string>
+    <string name="sign_in_forgot_password">Forgot Your Password?</string>
+    <string name="sign_in_or">or sign in with</string>
+    <string name="main_nav_menu_default_user_text">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="action_example_with_sliding_list">Sliding list</string>
+    <string name="action_example_sliding_search_bar">Sliding search view</string>
+    <string name="random_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dictum lorem ac leo tincidunt varius. Donec lacinia elementum lobortis. Nulla pellentesque cursus sem. Aliquam vestibulum lacinia metus, ac faucibus nunc fringilla a. Nullam mauris lorem, pharetra vitae mollis in, gravida a mi. Sed eu elit vitae lorem vestibulum volutpat eget blandit tortor. Duis dignissim porta dolor, ut porttitor lectus pretium vitae.  Phasellus quis augue ante. Nam tempus egestas consectetur. Praesent nec placerat nisi, non malesuada dolor. Duis malesuada semper lorem, nec feugiat nisl. Nulla facilisi. Sed aliquam ex ut turpis malesuada dignissim. Nam risus mi, dapibus maximus nisl ac, efficitur suscipit ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec malesuada nisl eget faucibus mollis. Nam sit amet mauris a metus euismod porttitor et sed mi. Nunc vel vehicula arcu, eu lacinia odio. Fusce id lacus vel dui blandit maximus id eget neque.  Sed eu porta diam. Nunc vitae egestas diam. Donec semper hendrerit laoreet. Aliquam quis aliquam nulla. Aenean euismod lacus sed pretium scelerisque. Suspendisse mollis arcu at ligula pulvinar, nec elementum velit fermentum. Sed sed mollis ligula, vel eleifend metus. Sed magna metus, tempus ut bibendum at, aliquam at nisi. Integer nec fringilla mauris, vel viverra augue. Morbi eu mi mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.  Proin molestie ante nec tristique finibus. In hac habitasse platea dictumst. Maecenas sed risus condimentum, feugiat velit ac, dictum erat. Curabitur pharetra ac nulla sed lacinia. Curabitur rutrum dolor vestibulum magna ultrices congue ac sed libero. Nam semper mi a neque ultricies commodo. In condimentum in odio in porttitor. Suspendisse maximus vestibulum nunc, vel gravida dui fermentum eu. Morbi sed orci augue. Praesent dolor justo, cursus sit amet ex et, posuere mattis lorem. Donec in efficitur orci. Nam semper odio a interdum aliquet. Vivamus vitae luctus purus, in fermentum diam. Pellentesque quis orci vitae est placerat faucibus. Maecenas non gravida ipsum, sit amet ultrices sem. Phasellus fringilla ultrices erat, vel aliquam sapien varius ac.  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam porta semper sapien. Pellentesque volutpat porta sapien, ut tristique metus. In hac habitasse platea dictumst. Aenean pharetra molestie dapibus. Nunc sed dolor elit. Quisque eget enim non tellus volutpat mollis a id dolor. Aenean sit amet sem sem. Nunc viverra efficitur lorem. Quisque quis metus dictum, mattis ante non, pellentesque sapien. Integer quis lectus feugiat, consectetur nulla quis, viverra nulla. Curabitur eu sodales nisl. Morbi non enim pellentesque, lobortis est id, dignissim mauris. Nulla et tempor lectus.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dictum lorem ac leo tincidunt varius. Donec lacinia elementum lobortis. Nulla pellentesque cursus sem. Aliquam vestibulum lacinia metus, ac faucibus nunc fringilla a. Nullam mauris lorem, pharetra vitae mollis in, gravida a mi. Sed eu elit vitae lorem vestibulum volutpat eget blandit tortor. Duis dignissim porta dolor, ut porttitor lectus pretium vitae.  Phasellus quis augue ante. Nam tempus egestas consectetur. Praesent nec placerat nisi, non malesuada dolor. Duis malesuada semper lorem, nec feugiat nisl. Nulla facilisi. Sed aliquam ex ut turpis malesuada dignissim. Nam risus mi, dapibus maximus nisl ac, efficitur suscipit ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec malesuada nisl eget faucibus mollis. Nam sit amet mauris a metus euismod porttitor et sed mi. Nunc vel vehicula arcu, eu lacinia odio. Fusce id lacus vel dui blandit maximus id eget neque.  Sed eu porta diam. Nunc vitae egestas diam. Donec semper hendrerit laoreet. Aliquam quis aliquam nulla. Aenean euismod lacus sed pretium scelerisque. Suspendisse mollis arcu at ligula pulvinar, nec elementum velit fermentum. Sed sed mollis ligula, vel eleifend metus. Sed magna metus, tempus ut bibendum at, aliquam at nisi. Integer nec fringilla mauris, vel viverra augue. Morbi eu mi mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.  Proin molestie ante nec tristique finibus. In hac habitasse platea dictumst. Maecenas sed risus condimentum, feugiat velit ac, dictum erat. Curabitur pharetra ac nulla sed lacinia. Curabitur rutrum dolor vestibulum magna ultrices congue ac sed libero. Nam semper mi a neque ultricies commodo. In condimentum in odio in porttitor. Suspendisse maximus vestibulum nunc, vel gravida dui fermentum eu. Morbi sed orci augue. Praesent dolor justo, cursus sit amet ex et, posuere mattis lorem. Donec in efficitur orci. Nam semper odio a interdum aliquet. Vivamus vitae luctus purus, in fermentum diam. Pellentesque quis orci vitae est placerat faucibus. Maecenas non gravida ipsum, sit amet ultrices sem. Phasellus fringilla ultrices erat, vel aliquam sapien varius ac.  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam porta semper sapien. Pellentesque volutpat porta sapien, ut tristique metus. In hac habitasse platea dictumst. Aenean pharetra molestie dapibus. Nunc sed dolor elit. Quisque eget enim non tellus volutpat mollis a id dolor. Aenean sit amet sem sem. Nunc viverra efficitur lorem. Quisque quis metus dictum, mattis ante non, pellentesque sapien. Integer quis lectus feugiat, consectetur nulla quis, viverra nulla. Curabitur eu sodales nisl. Morbi non enim pellentesque, lobortis est id, dignissim mauris. Nulla et tempor lectus.</string>
+    <string name="action_example_scrolling_search_bar">scrolling behavior</string>
+
+</resources>

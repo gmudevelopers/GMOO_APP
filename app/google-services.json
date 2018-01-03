@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "776351843221",
+    "firebase_url": "https://gmoo-415bb.firebaseio.com",
+    "project_id": "gmoo-415bb",
+    "storage_bucket": "gmoo-415bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776351843221:android:8e3a7625864f6cd8",
+        "android_client_info": {
+          "package_name": "gmoo.com.gmudevelopers.edu.gmoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776351843221-sj9q07vnh0asatb7ovieia6c9cl3t3um.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdsLCaWYiLsqBnYy0gmMOsAQraUJU2f9k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
