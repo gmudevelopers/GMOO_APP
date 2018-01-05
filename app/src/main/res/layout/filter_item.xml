@@ -27,6 +27,7 @@
     android:theme="@style/PlaidDarkOverlay"
     android:foreground="?android:selectableItemBackground">
 
+
     <ImageView
         android:id="@+id/filter_icon"
         android:layout_width="@dimen/avatar_size"

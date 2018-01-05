@@ -39,16 +39,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.heinrichreimersoftware.materialdrawer.R;
-import com.heinrichreimersoftware.materialdrawer.structure.DrawerHeaderItem;
-import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
-import com.heinrichreimersoftware.materialdrawer.theme.DrawerTheme;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+import gmoo.com.gmudevelopers.edu.library.R;
+import gmoo.com.gmudevelopers.edu.library.structure.DrawerHeaderItem;
+import gmoo.com.gmudevelopers.edu.library.structure.DrawerItem;
+import gmoo.com.gmudevelopers.edu.library.theme.DrawerTheme;
+
 /**
- * Adapter to be used with {@link com.heinrichreimersoftware.materialdrawer.DrawerView} to display a list of drawer items.
+ * Adapter to be used with {com.heinrichreimersoftware.materialdrawer.DrawerView} to display a list of drawer items.
  */
 public class DrawerAdapter extends ArrayAdapter<DrawerItem> {
 

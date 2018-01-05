@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:staggered="http://schemas.android.com/apk/res-auto" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F2F2F2" >
+
+    <gmoo.com.gmudevelopers.edu.gmoo.ui.staggeredgrid.StaggeredGridView
+        android:id="@+id/staggeredview" 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    staggered:columnCount="2"
+	    staggered:mode="fixed"/>
+    
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@color/bg_transparent_80"
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="@dimen/padding_normal" >
+
+            <ProgressBar
+                android:id="@+id/search_progressbar"
+                style="?android:attr/progressBarStyleInverse"
+                android:layout_width="@dimen/progress_width"
+                android:layout_height="@dimen/progress_height"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:indeterminate="true" />
+
+            <TextView
+                android:id="@+id/search_progress_message"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_toRightOf="@id/search_progressbar"
+                android:text="@string/loading_more" />
+        </RelativeLayout>    
+</FrameLayout>    

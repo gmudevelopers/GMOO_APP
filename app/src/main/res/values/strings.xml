@@ -227,8 +227,11 @@
     <string name="add">Add</string>
     <string name="edit">Edit</string>
     <string name="no_filters_selected">No filters selected, press the filter button above (&#2228;)\nor swipe from the&#160;right</string>
-
+<string name ="browse_add">Browse</string>
+    <string name ="category">Categories</string>
+    <string name="chat">chat</string>
     <!-- data sources / filters -->
+    <string name="sell_your_staff">sell your staff</string>
     <string name="source_browse">Browse</string>
     <string name="source_sell_your_stuff">Sell Your Stuff</string>
     <string name="source_chat">Chat</string>
@@ -636,12 +639,38 @@
     <string name="samples_subhead">Hello Subhead</string>
     <string name="samples_hint_username">Username</string>
     <string name="samples_hint_email">E-Mail</string>
-
-
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Photos</item>
+        <item>Movies</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+    </string-array>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
 
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_photos">Photos</string>
+    <string name="nav_movies">Movies</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_settings">Account Settings</string>
+    <string name="nav_about_us">About Us</string>
+<string name="help">help</string>
+    <string name="action_sort">Sort</string>
+<string name="logout">logout</string>
+    <string name="action_home">Home</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_inbox">Inbox</string>
+    <string name="action_logout">Logout</string>
+
+    <string name="lbl_close">Close</string>
+    <string name="lbl_open">Open</string>
 
     <string name="title_activity_register">RegisterActivity</string>
 
@@ -650,7 +679,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
+    <string name="loading_more">Loading more images..</string>
     <string name="facebook_app_id" translatable="false">1381637161909568</string>
     <string name="fb_login_protocol_scheme">fb1381637161909568</string>
     <!-- Strings related to login -->
@@ -670,6 +699,15 @@
     <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
 
 
+    <string name="hello_world2">Example of using <i>DrawerFrameLayout</i> for the drawer.\nThis drawer has a custom max width of 250dp.\n\nCheck out the sample code on GitHub!</string>
+    <string name="hello_world3">Example of using <i>DrawerActivity</i> for the drawer.\nThis drawer shows theming and has a custom <i>Toolbar</i> set.\n\nVery simple ;)</string>
+    <string name="action_github">GitHub</string>
+    <string name="lorem_ipsum_short" translatable="false">Lorem ipsum</string>
+    <string name="lorem_ipsum_medium" translatable="false">Lorem ipsum dolor sit amet</string>
+    <string name="lorem_ipsum_long" translatable="false">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam</string>
+
+    <string name="drawer_frame_layout">DrawerFrameLayout</string>
+    <string name="drawer_activity">DrawerActivity</string>
     <string name="sign_in_email">Email</string>
     <string name="sign_in_username">Username/Phone Number (+15551234567)</string>
     <string name="sign_in_password">Password</string>

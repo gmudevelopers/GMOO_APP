@@ -37,12 +37,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.heinrichreimersoftware.materialdrawer.R;
-import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
-import com.heinrichreimersoftware.materialdrawer.theme.DrawerTheme;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import gmoo.com.gmudevelopers.edu.library.R;
+import gmoo.com.gmudevelopers.edu.library.structure.DrawerProfile;
+import gmoo.com.gmudevelopers.edu.library.theme.DrawerTheme;
 
 /**
  * Adapter to be used with {@link com.heinrichreimersoftware.materialdrawer.DrawerView} to display a list of drawer items.

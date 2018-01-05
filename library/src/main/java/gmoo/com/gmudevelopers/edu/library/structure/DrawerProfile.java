@@ -29,12 +29,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import com.heinrichreimersoftware.materialdrawer.DrawerView;
-import com.heinrichreimersoftware.materialdrawer.drawable.RoundedAvatarDrawable;
-import com.heinrichreimersoftware.materialdrawer.theme.DrawerTheme;
+import gmoo.com.gmudevelopers.edu.library.DrawerView;
+import gmoo.com.gmudevelopers.edu.library.drawable.RoundedAvatarDrawable;
+import gmoo.com.gmudevelopers.edu.library.theme.DrawerTheme;
+
 
 /**
- * Object to be used with {@link com.heinrichreimersoftware.materialdrawer.DrawerView} to display a profile in the drawer.
+ * Object to be used with {@} to display a profile in the drawer.
  * Can hold an image, a primary text, a secondary text and a listener.
  */
 public class DrawerProfile {

@@ -18,6 +18,7 @@ package gmoo.com.gmudevelopers.edu.gmoo.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -35,7 +36,11 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -43,6 +48,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -60,6 +67,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.WindowInsets;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -68,16 +76,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.liveo.interfaces.OnItemClickListener;
+import br.liveo.navigationliveo.NavigationLiveo;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
+import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
 import gmoo.com.gmudevelopers.edu.gmoo.data.PlaidItem;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
@@ -87,6 +102,7 @@ import gmoo.com.gmudevelopers.edu.gmoo.data.pocket.PocketUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DesignerNewsPrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DribbblePrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.SourceManager;
+import gmoo.com.gmudevelopers.edu.gmoo.model.AddDetail;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.FilterTouchHelperCallback;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.GridItemDividerDecoration;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.InfiniteScrollListener;
@@ -94,9 +110,10 @@ import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.FabTransform;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.MorphTransform;
 import gmoo.com.gmudevelopers.edu.gmoo.util.AnimUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.util.ViewUtils;
+import gmoo.com.gmudevelopers.edu.gmoo.util.glide.CircleTransform;
 
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity implements  AdapterView.OnItemClickListener {
 
     private static final int RC_SEARCH = 0;
     private static final int RC_AUTH_DRIBBBLE_FOLLOWING = 1;
@@ -104,6 +121,31 @@ public class HomeActivity extends Activity {
     private static final int RC_AUTH_DRIBBBLE_USER_SHOTS = 3;
     private static final int RC_NEW_DESIGNER_NEWS_STORY = 4;
     private static final int RC_NEW_DESIGNER_NEWS_LOGIN = 5;
+    private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
+    private static final String urlProfileImg = "https://lh3.googleusercontent.com/eCtE_G34M9ygdkmOpYvCag1vBARCmZwnVS6rS5t4JLzJ6QgQSBquM0nuTsCpLhYbKljoyS-txg";
+
+    // index to identify current nav menu item
+    public static int navItemIndex = 0;
+
+    // tags used to attach the fragments
+    private static final String TAG_HOME = "home";
+    private static final String TAG_PHOTOS = "photos";
+    private static final String TAG_MOVIES = "movies";
+    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_SETTINGS = "settings";
+    public static String CURRENT_TAG = TAG_HOME;
+
+    // toolbar titles respected to selected nav menu item
+    private String[] activityTitles;
+
+    // flag to load home fragment when user presses back key
+    private boolean shouldLoadHomeFragOnBackPress = true;
+    private Handler mHandler;
+
+
+    private View navHeader;
+    private ImageView imgNavHeaderBg, imgProfile;
+    private TextView txtName, txtWebsite;
 
     private ActionBarDrawerToggle drawerToggle;
     @BindView(R.id.drawer)
@@ -113,7 +155,7 @@ public class HomeActivity extends Activity {
     @BindView(R.id.grid) RecyclerView grid;
     @BindView(R.id.fab)
     ImageButton fab;
-    @BindView(R.id.filters) RecyclerView filtersList;
+
     @BindView(android.R.id.empty)
     ProgressBar loading;
     @Nullable
@@ -129,10 +171,12 @@ public class HomeActivity extends Activity {
     // data
     DataManager dataManager;
     FeedAdapter adapter;
-    FilterAdapter filtersAdapter;
+
     private DesignerNewsPrefs designerNewsPrefs;
     private DribbblePrefs dribbblePrefs;
 
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,140 +184,186 @@ public class HomeActivity extends Activity {
         ButterKnife.bind(this);
 
       //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(layoutManager);
 
+        recyclerView.setHasFixedSize(false);
+        ArrayList<AddDetail> addList = getAdds();
+        StaggeredAdapter staggeredAdapter = new StaggeredAdapter(addList);
+        recyclerView.setAdapter(staggeredAdapter);
+        // Navigation view header
+        navHeader = navigationView.getHeaderView(0);
+        txtName = (TextView) navHeader.findViewById(R.id.name);
+        txtWebsite = (TextView) navHeader.findViewById(R.id.website);
+        imgNavHeaderBg = (ImageView) navHeader.findViewById(R.id.img_header_bg);
+        imgProfile = (ImageView) navHeader.findViewById(R.id.img_profile);
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
         setActionBar(toolbar);
         if (savedInstanceState == null) {
             animateToolbar();
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+            loadHomeFragment();
         }
-        setExitSharedElementCallback(FeedAdapter.createSharedElementReenterCallback(this));
+        //setExitSharedElementCallback(FeedAdapter.createSharedElementReenterCallback(this));
 
         dribbblePrefs = DribbblePrefs.get(this);
         designerNewsPrefs = DesignerNewsPrefs.get(this);
-        filtersAdapter = new FilterAdapter(this, SourceManager.getSources(this),
-                new FilterAdapter.FilterAuthoriser() {
-            @Override
-            public void requestDribbbleAuthorisation(View sharedElement, Source forSource) {
-                Intent login = new Intent(HomeActivity.this, DribbbleLogin.class);
-                MorphTransform.addExtras(login,
-                        ContextCompat.getColor(HomeActivity.this, R.color.background_dark),
-                        sharedElement.getHeight() / 2);
-                ActivityOptions options =
-                        ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this,
-                                sharedElement, getString(R.string.transition_dribbble_login));
-                startActivityForResult(login,
-                        getAuthSourceRequestCode(forSource), options.toBundle());
-            }
-        });
-        dataManager = new DataManager(this, filtersAdapter) {
-            @Override
-            public void onDataLoaded(List<? extends PlaidItem> data) {
-                adapter.addAndResort(data);
-                checkEmptyState();
-            }
-        };
-        adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
 
-        grid.setAdapter(adapter);
-        layoutManager = new GridLayoutManager(this, columns);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return adapter.getItemColumnSpan(position);
-            }
-        });
-        grid.setLayoutManager(layoutManager);
-        grid.addOnScrollListener(toolbarElevation);
-        grid.addOnScrollListener(new InfiniteScrollListener(layoutManager, dataManager) {
-            @Override
-            public void onLoadMore() {
-                dataManager.loadAllDataSources();
-            }
-        });
-        grid.setHasFixedSize(false);
 
-        grid.addItemDecoration(new GridItemDividerDecoration(adapter.getDividedViewHolderClasses(),
-                this, R.dimen.divider_height, R.color.divider));
-        grid.setItemAnimator(new HomeGridItemAnimator());
+     //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
 
-        // drawer layout treats fitsSystemWindows specially so we have to handle insets ourselves
-        drawer.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                // inset the toolbar down by the status bar height
-                ViewGroup.MarginLayoutParams lpToolbar = (ViewGroup.MarginLayoutParams) toolbar
-                        .getLayoutParams();
-                lpToolbar.topMargin += insets.getSystemWindowInsetTop();
-                lpToolbar.leftMargin += insets.getSystemWindowInsetLeft();
-                lpToolbar.rightMargin += insets.getSystemWindowInsetRight();
-                toolbar.setLayoutParams(lpToolbar);
-
-                // inset the grid top by statusbar+toolbar & the bottom by the navbar (don't clip)
-                grid.setPadding(
-                        grid.getPaddingLeft() + insets.getSystemWindowInsetLeft(), // landscape
-                        insets.getSystemWindowInsetTop()
-                                + ViewUtils.getActionBarSize(HomeActivity.this),
-                        grid.getPaddingRight() + insets.getSystemWindowInsetRight(), // landscape
-                        grid.getPaddingBottom() + insets.getSystemWindowInsetBottom());
-
-                // inset the fab for the navbar
-                ViewGroup.MarginLayoutParams lpFab = (ViewGroup.MarginLayoutParams) fab
-                        .getLayoutParams();
-                lpFab.bottomMargin += insets.getSystemWindowInsetBottom(); // portrait
-                lpFab.rightMargin += insets.getSystemWindowInsetRight(); // landscape
-                fab.setLayoutParams(lpFab);
-
-                View postingStub = findViewById(R.id.stub_posting_progress);
-                ViewGroup.MarginLayoutParams lpPosting =
-                        (ViewGroup.MarginLayoutParams) postingStub.getLayoutParams();
-                lpPosting.bottomMargin += insets.getSystemWindowInsetBottom(); // portrait
-                lpPosting.rightMargin += insets.getSystemWindowInsetRight(); // landscape
-                postingStub.setLayoutParams(lpPosting);
-
-                // we place a background behind the status bar to combine with it's semi-transparent
-                // color to get the desired appearance.  Set it's height to the status bar height
-                View statusBarBackground = findViewById(R.id.status_bar_background);
-                FrameLayout.LayoutParams lpStatus = (FrameLayout.LayoutParams)
-                        statusBarBackground.getLayoutParams();
-                lpStatus.height = insets.getSystemWindowInsetTop();
-                statusBarBackground.setLayoutParams(lpStatus);
-
-                // inset the filters list for the status bar / navbar
-                // need to set the padding end for landscape case
-                final boolean ltr = filtersList.getLayoutDirection() == View.LAYOUT_DIRECTION_LTR;
-                filtersList.setPaddingRelative(filtersList.getPaddingStart(),
-                        filtersList.getPaddingTop() + insets.getSystemWindowInsetTop(),
-                        filtersList.getPaddingEnd() + (ltr ? insets.getSystemWindowInsetRight() :
-                                0),
-                        filtersList.getPaddingBottom() + insets.getSystemWindowInsetBottom());
-
-                // clear this listener so insets aren't re-applied
-                drawer.setOnApplyWindowInsetsListener(null);
-
-                return insets.consumeSystemWindowInsets();
-            }
-        });
         setupTaskDescription();
+        // load nav menu header data
+        loadNavHeader();
 
-        filtersList.setAdapter(filtersAdapter);
-        filtersList.setItemAnimator(new FilterAdapter.FilterAnimator());
-        filtersAdapter.registerFilterChangedCallback(filtersChangedCallbacks);
-        dataManager.loadAllDataSources();
-        ItemTouchHelper.Callback callback = new FilterTouchHelperCallback(filtersAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(filtersList);
-        checkEmptyState();
+        // initializing navigation menu
+        setUpNavigationView();
+       // dataManager.loadAllDataSources();
+
+        //checkEmptyState();
+
+        // Set Drawerlayout switch indicator that the icon leftmost Toolbar
+
+
+
+
+    }
+    private void loadNavHeader() {
+        // name, website
+        txtName.setText("Ravi Tamada");
+        txtWebsite.setText("www.androidhive.info");
+
+        // loading header background image
+        Glide.with(this).load(urlNavHeaderBg)
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgNavHeaderBg);
+
+        // Loading profile image
+        Glide.with(this).load(urlProfileImg)
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(imgProfile);
+
+        // showing dot next to notifications label
+        navigationView.getMenu().getItem(3).setActionView(R.layout.menu_dot);
     }
 
+    private void setUpNavigationView() {
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.home:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
+                        break;
+                    case R.id.nav_category:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_PHOTOS;
+                        break;
+                    case R.id.nav_sell_your_stuff:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_MOVIES;
+                        break;
+                    case R.id.nav_chat:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_NOTIFICATIONS;
+                        break;
+                    case R.id.nav_settings:
+                        navItemIndex = 4;
+                        CURRENT_TAG = TAG_SETTINGS;
+                        break;
+                    case R.id.help:
+                        // launch new intent instead of loading fragment
+                       // startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+                        drawer.closeDrawers();
+                        return true;
+                    case R.id.logout:
+                        // launch new intent instead of loading fragment
+                      //  startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+                        drawer.closeDrawers();
+                        return true;
+                    default:
+                        navItemIndex = 0;
+                }
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                menuItem.setChecked(true);
+
+                loadHomeFragment();
+
+                return true;
+            }
+        });
+
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        drawer.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+    }
+
+    private void selectNavMenu() {
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
+    private void loadHomeFragment() {
+        // selecting appropriate nav menu item
+        selectNavMenu();
+
+        // set toolbar title
+        //setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+
+
+
+    }
     @Override
     protected void onResume() {
         super.onResume();
-        dribbblePrefs.addLoginStatusListener(filtersAdapter);
+      //  dribbblePrefs.addLoginStatusListener(filtersAdapter);
         checkConnectivity();
     }
 
     @Override
     protected void onPause() {
-        dribbblePrefs.removeLoginStatusListener(filtersAdapter);
+
         if (monitoringConnectivity) {
             final ConnectivityManager connectivityManager
                     = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -285,31 +375,7 @@ public class HomeActivity extends Activity {
 
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
-        if (data == null || resultCode != RESULT_OK
-                || !data.hasExtra(DribbbleShot.RESULT_EXTRA_SHOT_ID)) return;
 
-        // When reentering, if the shared element is no longer on screen (e.g. after an
-        // orientation change) then scroll it into view.
-        final long sharedShotId = data.getLongExtra(DribbbleShot.RESULT_EXTRA_SHOT_ID, -1L);
-        if (sharedShotId != -1L                                             // returning from a shot
-                && adapter.getDataItemCount() > 0                           // grid populated
-                && grid.findViewHolderForItemId(sharedShotId) == null) {    // view not attached
-            final int position = adapter.getItemPosition(sharedShotId);
-            if (position == RecyclerView.NO_POSITION) return;
-
-            // delay the transition until our shared element is on-screen i.e. has been laid out
-            postponeEnterTransition();
-            grid.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int l, int t, int r, int b,
-                                           int oL, int oT, int oR, int oB) {
-                    grid.removeOnLayoutChangeListener(this);
-                    startPostponedEnterTransition();
-                }
-            });
-            grid.scrollToPosition(position);
-            toolbar.setTranslationZ(-1f);
-        }
     }
 
     @Override
@@ -333,6 +399,7 @@ public class HomeActivity extends Activity {
         return true;
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -373,106 +440,96 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    private ArrayList<AddDetail> getAdds() {
+        ArrayList<AddDetail> details = new ArrayList<>();
+        for (int index=0; index<getFakeList().size();index++){
+            details.add(new AddDetail(getFakeList().get(index)));
+        }
+        return details;
+    }
+
+
+
+
+    private ArrayList<String> getFakeList() {
+        ArrayList<String> imagesList = new ArrayList<>();
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/23193634/tumblr_oiboua3s6F1slhhf0o1_500.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/08192732/tumblr_oev1qbnble1ted1sho1_500.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/18184202/tumblr_ntyttsx2Y51ted1sho1_500.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/25093310/2016-03-01-roman-drits-barnimages-008-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/25093310/2016-03-01-roman-drits-barnimages-008-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/25093331/tumblr_ofz20toUqd1ted1sho1_500.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/23193617/2016-11-13-barnimages-igor-trepeshchenok-01-768x509.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/08192739/tumblr_ofem6n49F61ted1sho1_500.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/25093334/2016-11-21-roman-drits-barnimages-003-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093356/DSF1919-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/02093347/2016-11-21-roman-drits-barnimages-009-768x512.jpg");
+        imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094158/2016-12-05-roman-drits-barnimages-011-768x512.jpg");
+
+        return imagesList;
+    }
+
+
+
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawers();
+            return;
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case RC_SEARCH:
-                // reset the search icon which we hid
-                View searchMenuView = toolbar.findViewById(R.id.menu_search);
-                if (searchMenuView != null) {
-                    searchMenuView.setAlpha(1f);
-                }
-                if (resultCode == SearchActivity.RESULT_CODE_SAVE) {
-                    String query = data.getStringExtra(SearchActivity.EXTRA_QUERY);
-                    if (TextUtils.isEmpty(query)) return;
-                    Source dribbbleSearch = null;
-                    Source designerNewsSearch = null;
-                    boolean newSource = false;
-                    if (data.getBooleanExtra(SearchActivity.EXTRA_SAVE_DRIBBBLE, false)) {
-                        dribbbleSearch = new Source.DribbbleSearchSource(query, true);
-                        newSource = filtersAdapter.addFilter(dribbbleSearch);
-                    }
-                    if (data.getBooleanExtra(SearchActivity.EXTRA_SAVE_DESIGNER_NEWS, false)) {
-                        designerNewsSearch = new Source.DesignerNewsSearchSource(query, true);
-                        newSource |= filtersAdapter.addFilter(designerNewsSearch);
-                    }
-                    if (newSource) {
-                        highlightNewSources(dribbbleSearch, designerNewsSearch);
-                    }
-                }
-                break;
-            case RC_NEW_DESIGNER_NEWS_STORY:
-                switch (resultCode) {
-                    case PostNewDesignerNewsStory.RESULT_DRAG_DISMISSED:
-                        // need to reshow the FAB as there's no shared element transition
-                        showFab();
-                        unregisterPostStoryResultListener();
-                        break;
-                    case PostNewDesignerNewsStory.RESULT_POSTING:
-                        showPostingProgress();
-                        break;
-                    default:
-                        unregisterPostStoryResultListener();
-                        break;
-                }
-                break;
-            case RC_NEW_DESIGNER_NEWS_LOGIN:
-                if (resultCode == RESULT_OK) {
-                    showFab();
-                }
-                break;
-            case RC_AUTH_DRIBBBLE_FOLLOWING:
-                if (resultCode == RESULT_OK) {
-                    filtersAdapter.enableFilterByKey(SourceManager.SOURCE_DRIBBBLE_FOLLOWING, this);
-                }
-                break;
-            case RC_AUTH_DRIBBBLE_USER_LIKES:
-                if (resultCode == RESULT_OK) {
-                    filtersAdapter.enableFilterByKey(
-                            SourceManager.SOURCE_DRIBBBLE_USER_LIKES, this);
-                }
-                break;
-            case RC_AUTH_DRIBBBLE_USER_SHOTS:
-                if (resultCode == RESULT_OK) {
-                    filtersAdapter.enableFilterByKey(
-                            SourceManager.SOURCE_DRIBBBLE_USER_SHOTS, this);
-                }
-                break;
+
         }
     }
 
     @Override
     protected void onDestroy() {
-        dataManager.cancelLoading();
+
         super.onDestroy();
     }
 
-    // listener for notifying adapter when data sources are deactivated
-    private FilterAdapter.FiltersChangedCallbacks filtersChangedCallbacks =
-            new FilterAdapter.FiltersChangedCallbacks() {
-        @Override
-        public void onFiltersChanged(Source changedFilter) {
-            if (!changedFilter.active) {
-                adapter.removeDataSource(changedFilter.key);
-            }
-            checkEmptyState();
-        }
 
-        @Override
-        public void onFilterRemoved(Source removed) {
-            adapter.removeDataSource(removed.key);
-            checkEmptyState();
-        }
-    };
 
     private RecyclerView.OnScrollListener toolbarElevation = new RecyclerView.OnScrollListener() {
         @Override
@@ -495,6 +552,7 @@ public class HomeActivity extends Activity {
         }
     };
 
+    @SuppressLint("RestrictedApi")
     @OnClick(R.id.fab)
     protected void fabClick() {
         if (designerNewsPrefs.isLoggedIn()) {
@@ -604,24 +662,7 @@ public class HomeActivity extends Activity {
         fabPosting = (ImageButton) ((ViewStub) findViewById(R.id.stub_posting_progress)).inflate();
     }
 
-    void checkEmptyState() {
-        if (adapter.getDataItemCount() == 0) {
-            // if grid is empty check whether we're loading or if no filters are selected
-            if (filtersAdapter.getEnabledSourcesCount() > 0) {
-                if (connected) {
-                    loading.setVisibility(View.VISIBLE);
-                    setNoFiltersEmptyTextVisibility(View.GONE);
-                }
-            } else {
-                loading.setVisibility(View.GONE);
-                setNoFiltersEmptyTextVisibility(View.VISIBLE);
-            }
-            toolbar.setTranslationZ(0f);
-        } else {
-            loading.setVisibility(View.GONE);
-            setNoFiltersEmptyTextVisibility(View.GONE);
-        }
-    }
+
 
     int getAuthSourceRequestCode(Source filter) {
         switch (filter.key) {
@@ -769,21 +810,21 @@ public class HomeActivity extends Activity {
                 List<Integer> filterPositions = new ArrayList<>(sources.length);
                 for (Source source : sources) {
                     if (source != null) {
-                        filterPositions.add(filtersAdapter.getFilterPosition(source));
+                       // filterPositions.add(filtersAdapter.getFilterPosition(source));
                     }
                 }
                 int scrollTo = Collections.max(filterPositions);
-                filtersList.smoothScrollToPosition(scrollTo);
+              //  filtersList.smoothScrollToPosition(scrollTo);
                 for (int position : filterPositions) {
-                    filtersAdapter.highlightFilter(position);
+                 //   filtersAdapter.highlightFilter(position);
                 }
-                filtersList.setOnTouchListener(filtersTouch);
+                //filtersList.setOnTouchListener(filtersTouch);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 // reset
-                filtersList.setOnTouchListener(null);
+              //  filtersList.setOnTouchListener(null);
                 drawer.removeDrawerListener(this);
             }
 
@@ -847,4 +888,9 @@ public class HomeActivity extends Activity {
             connected = false;
         }
     };
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
 }

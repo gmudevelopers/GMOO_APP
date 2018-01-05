@@ -135,7 +135,7 @@ public class SourceManager {
     <string name="source_help">Help</string>
 * */
     private static ArrayList<Source> getDefaultSources(Context context) {
-        ArrayList<Source> defaultSources = new ArrayList<>(11);
+        ArrayList<Source> defaultSources = new ArrayList<>(7);
         defaultSources.add(new Source.DesignerNewsSource(SOURCE_DESIGNER_NEWS_POPULAR, 100,
                 context.getString(R.string.source_browse), true));
         defaultSources.add(new Source.DesignerNewsSource(SOURCE_DESIGNER_NEWS_RECENT, 101,

@@ -24,7 +24,8 @@
 
 <resources>
     <color name="md_inset_foreground">#42000000</color>
-
+    <color name="bg_black">#000000</color>
+    <color name="bg_transparent_80">#80000000</color>
     <color name="md_divider_light">#1e000000</color>
     <!-- 12% opacity -->
     <color name="md_divider_dark">#1effffff</color>

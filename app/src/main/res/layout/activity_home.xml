@@ -101,21 +101,15 @@
     </FrameLayout>
 
     <!-- filter drawer -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/filters"
-        android:layout_width="@dimen/drawer_width"
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:paddingTop="@dimen/spacing_normal"
-        android:paddingBottom="@dimen/spacing_normal"
-        android:elevation="@dimen/z_drawer"
-        android:background="@color/background_dark"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:scrollbarStyle="outsideOverlay"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/filter_item" />
-
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
 
 
 </android.support.v4.widget.DrawerLayout>

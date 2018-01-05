@@ -33,4 +33,15 @@
         <attr name="drawerMaxWidth" format="dimension" />
     </declare-styleable>
 
+
+    <declare-styleable name="StaggeredGridView">
+
+        <!-- Number of columns displayed in StaggeredGridView -->
+        <attr name="columnCount" format="integer" />
+
+        <!-- Set mode for the StaggeredGridView. -->
+        <attr name="mode" format="string" />
+
+    </declare-styleable>
+
 </resources>

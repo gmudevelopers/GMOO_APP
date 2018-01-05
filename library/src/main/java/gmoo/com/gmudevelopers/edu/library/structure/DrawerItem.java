@@ -34,7 +34,7 @@ import gmoo.com.gmudevelopers.edu.library.drawable.RoundedAvatarDrawable;
 import gmoo.com.gmudevelopers.edu.library.theme.DrawerTheme;
 
 /**
- * //Object to be used with com.heinrichreimersoftware.materialdrawer.adapter.DrawerAdapter} and {@link com.heinrichreimersoftware.materialdrawer.DrawerView} to display a drawer item.
+ * //Object to be used with com.heinrichreimersoftware.materialdrawer.adapter.DrawerAdapter} and {com.heinrichreimersoftware.materialdrawer.DrawerView} to display a drawer item.
  * Can hold an image, a primary text, a secondary text and a listener.
  */
 public class DrawerItem {

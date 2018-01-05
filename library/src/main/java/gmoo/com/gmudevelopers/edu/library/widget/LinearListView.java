@@ -25,7 +25,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
-import com.heinrichreimersoftware.materialdrawer.R;
+import gmoo.com.gmudevelopers.edu.library.R;
+
 
 /**
  * An extension of a linear layout that supports the divider API of Android
