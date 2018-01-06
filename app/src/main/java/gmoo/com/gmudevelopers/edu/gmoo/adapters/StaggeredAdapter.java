@@ -49,8 +49,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
     // Create new views (invoked by the layout manager)
     @Override
-    public StaggeredAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                          int viewType) {
+    public StaggeredAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         v   = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.staggered_layout, parent, false);

@@ -189,7 +189,14 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+      //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+
+      //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         loading.setIndeterminate(false);
@@ -739,12 +746,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     }
 
     private void setupTaskDescription() {
-        Bitmap overviewIcon =
-                BitmapFactory.decodeResource(getResources(), getApplicationInfo().icon);
-        setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name),
-                overviewIcon,
-                ContextCompat.getColor(this, R.color.primary)));
-        overviewIcon.recycle();
+
     }
 
     private void animateToolbar() {
