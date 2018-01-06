@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
 import gmoo.com.gmudevelopers.edu.gmoo.helpers.Constants;
 import gmoo.com.gmudevelopers.edu.gmoo.model.AddDetail;
+import gmoo.com.gmudevelopers.edu.gmoo.ui.galleryImplementation.activity.MediaGalleryActivity;
 
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ViewHolder> {
@@ -71,9 +72,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             @Override
             public void onClick(View v) {
 
-           /*     Bundle bundle=new Bundle();
-                //bundle.putInt("clickeditem",position);
-              //  Intent intent = new Intent(v.getContext(),MediaGalleryActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("clickeditem",position);
+                Intent intent = new Intent(v.getContext(),MediaGalleryActivity.class);
                 intent.putExtra(Constants.IMAGES,getFakeList());
                 intent.putExtra(Constants.TITLE, "Fake title");
                 intent.putExtra(Constants.BACKGROUND_COLOR,R.color.white);
@@ -82,7 +83,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
 
                 v.getContext().startActivity(intent);
-*/
+
                 Toast.makeText(v.getContext(), "item clicked"+position,Toast.LENGTH_SHORT).show();
 
             }

@@ -141,7 +141,9 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
-
+    @Nullable
+    @BindView(R.id.progress_bar)
+    ProgressBar bar;
 
     private View navHeader;
     private ImageView imgNavHeaderBg, imgProfile;
@@ -152,12 +154,17 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     DrawerLayout drawer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.grid) RecyclerView grid;
+
     @BindView(R.id.fab)
     ImageButton fab;
-
+    @BindView(R.id.grid)
+    RecyclerView recyclerView;
+    @Nullable
     @BindView(android.R.id.empty)
-    ProgressBar loading;
+     ProgressBar loading;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
     @Nullable
     @BindView(R.id.no_connection)
     ImageView noConnection;
@@ -175,21 +182,17 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     private DesignerNewsPrefs designerNewsPrefs;
     private DribbblePrefs dribbblePrefs;
 
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-      //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
+        loading.setIndeterminate(false);
 
         recyclerView.setHasFixedSize(false);
         ArrayList<AddDetail> addList = getAdds();
@@ -540,7 +543,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
             // to allow the content to pass in front (and reset when scrolled to top of the grid)
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && layoutManager.findFirstVisibleItemPosition() == 0
-                    && layoutManager.findViewByPosition(0).getTop() == grid.getPaddingTop()
+                    && layoutManager.findViewByPosition(0).getTop() == recyclerView.getPaddingTop()
                     && toolbar.getTranslationZ() != 0) {
                 // at top, reset elevation
                 toolbar.setTranslationZ(0f);

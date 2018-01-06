@@ -50,6 +50,7 @@
             android:theme="@style/Plaid.Home"
             android:exported="true"
             android:label="SignIn"/>
+        <activity android:name=".ui.galleryImplementation.activity.MediaGalleryActivity"/>
 
 <activity android:name=".MainActivity"
             android:theme="@style/AppTheme">

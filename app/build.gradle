@@ -87,7 +87,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'br.com.liveo:navigationdrawer-material:2.5.1'
     compile 'com.mindorks:placeholderview:0.2.7'
-
+    compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile project(path: ':library')
 }
