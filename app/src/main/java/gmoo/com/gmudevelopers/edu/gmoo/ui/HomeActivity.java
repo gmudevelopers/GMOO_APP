@@ -736,12 +736,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     }
 
     private void setupTaskDescription() {
-        Bitmap overviewIcon =
-                BitmapFactory.decodeResource(getResources(), getApplicationInfo().icon);
-        setTaskDescription(new ActivityManager.TaskDescription(getString(R.string.app_name),
-                overviewIcon,
-                ContextCompat.getColor(this, R.color.primary)));
-        overviewIcon.recycle();
+
     }
 
     private void animateToolbar() {
