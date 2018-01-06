@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -100,6 +101,12 @@ public class MainActivity extends Activity {
         flickerGetImagesRequest();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void flickerGetImagesRequest() {
 
