@@ -201,7 +201,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         recyclerView.setLayoutManager(layoutManager);
         loading.setIndeterminate(false);
 
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         ArrayList<AddDetail> addList = getAdds();
         StaggeredAdapter staggeredAdapter = new StaggeredAdapter(addList);
         recyclerView.setAdapter(staggeredAdapter);

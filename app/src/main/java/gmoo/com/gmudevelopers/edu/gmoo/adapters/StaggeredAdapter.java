@@ -113,7 +113,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/16094159/tumblr_o2z8oh0Ntt1ted1sho1_1280-683x1024.jpg");
         imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/23193617/2016-11-13-barnimages-igor-trepeshchenok-01-768x509.jpg");
         imagesList.add("http://static0.passel.co/wp-content/uploads/2016/11/08192739/tumblr_ofem6n49F61ted1sho1_500.jpg");
+        imagesList.add("https://cdn.magdeleine.co/wp-content/uploads/2014/09/15064277229_f42f483657_o.jpg");
+        imagesList.add("https://c1.staticflickr.com/3/2513/32639903212_fc9670b85a_o.jpg");
         return imagesList;
+
     }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
