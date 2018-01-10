@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".ui.staggeredgrid.StaggeredDemoApplication"
@@ -44,22 +45,15 @@
         <activity
             android:name=".auth.UserSignIn"
             android:exported="true"
-
-            android:label="SignIn"/>
-        <activity android:name=".ui.galleryImplementation.activity.MediaGalleryActivity"/>
-
-<activity android:name=".MainActivity"
-            android:theme="@style/AppTheme">
-
-</activity>
-        <!-- Use an alias in case we want to change the launch activity later without breaking
-             homescreen shortcuts. Note must be defined after the targetActivity -->
-
+            android:label="@string/app_name" />
         <!--
  Use an alias in case we want to change the launch activity later without breaking
              homescreen shortcuts. Note must be defined after the targetActivity
         -->
-
+        <!--
+ Use an alias in case we want to change the launch activity later without breaking
+             homescreen shortcuts. Note must be defined after the targetActivity
+        -->
         <activity-alias
             android:name=".Launcher"
             android:label="@string/app_name"
@@ -75,6 +69,10 @@
                 android:resource="@xml/shortcuts" />
         </activity-alias>
 
+        <activity android:name=".ui.galleryImplementation.activity.MediaGalleryActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.DribbbleShot"
             android:parentActivityName=".ui.HomeActivity"
@@ -186,6 +184,9 @@
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
 
+        <activity android:name=".activities.SelectCategoryActivity" />
+        <activity android:name=".activities.AddPostListActivity" />
+        <activity android:name=".activities.AddPostActivity"></activity>
     </application>
 
 </manifest>

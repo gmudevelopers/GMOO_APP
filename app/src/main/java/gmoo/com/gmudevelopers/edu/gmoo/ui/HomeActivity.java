@@ -20,14 +20,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
@@ -35,12 +32,11 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -48,13 +44,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
@@ -64,11 +57,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.WindowInsets;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -76,44 +66,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import br.liveo.interfaces.OnItemClickListener;
-import br.liveo.navigationliveo.NavigationLiveo;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
+import gmoo.com.gmudevelopers.edu.gmoo.activities.SelectCategoryActivity;
 import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
+import gmoo.com.gmudevelopers.edu.gmoo.auth.UserSignIn;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
-import gmoo.com.gmudevelopers.edu.gmoo.data.PlaidItem;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.PostStoryService;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.model.Story;
-import gmoo.com.gmudevelopers.edu.gmoo.data.pocket.PocketUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DesignerNewsPrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DribbblePrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.SourceManager;
 import gmoo.com.gmudevelopers.edu.gmoo.model.AddDetail;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.FilterTouchHelperCallback;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.GridItemDividerDecoration;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.InfiniteScrollListener;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.FabTransform;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.MorphTransform;
 import gmoo.com.gmudevelopers.edu.gmoo.util.AnimUtils;
-import gmoo.com.gmudevelopers.edu.gmoo.util.ViewUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.util.glide.CircleTransform;
 
 
-public class HomeActivity extends Activity implements  AdapterView.OnItemClickListener {
+public class HomeActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private static final int RC_SEARCH = 0;
     private static final int RC_AUTH_DRIBBBLE_FOLLOWING = 1;
@@ -129,6 +112,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     // tags used to attach the fragments
     private static final String TAG_HOME = "home";
+    private static final String TAG_POST_ADD = "post_add";
     private static final String TAG_PHOTOS = "photos";
     private static final String TAG_MOVIES = "movies";
     private static final String TAG_NOTIFICATIONS = "notifications";
@@ -161,7 +145,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     RecyclerView recyclerView;
     @Nullable
     @BindView(android.R.id.empty)
-     ProgressBar loading;
+    ProgressBar loading;
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
@@ -170,7 +154,8 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     ImageView noConnection;
     ImageButton fabPosting;
     GridLayoutManager layoutManager;
-    @BindInt(R.integer.num_columns) int columns;
+    @BindInt(R.integer.num_columns)
+    int columns;
     boolean connected = true;
     private TextView noFiltersEmptyText;
     private boolean monitoringConnectivity = false;
@@ -181,6 +166,8 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     private DesignerNewsPrefs designerNewsPrefs;
     private DribbblePrefs dribbblePrefs;
+    private FirebaseUser mUser;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -189,13 +176,17 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-      //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
-      //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+
+        //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
@@ -225,7 +216,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         designerNewsPrefs = DesignerNewsPrefs.get(this);
 
 
-     //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
+        //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
 
         setupTaskDescription();
         // load nav menu header data
@@ -233,16 +224,15 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
         // initializing navigation menu
         setUpNavigationView();
-       // dataManager.loadAllDataSources();
+        // dataManager.loadAllDataSources();
 
         //checkEmptyState();
 
         // Set Drawerlayout switch indicator that the icon leftmost Toolbar
 
 
-
-
     }
+
     private void loadNavHeader() {
         // name, website
         txtName.setText("Ravi Tamada");
@@ -281,31 +271,46 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_HOME;
                         break;
-                    case R.id.nav_category:
+
+                    case R.id.nav_post_add:
                         navItemIndex = 1;
+                        CURRENT_TAG = TAG_POST_ADD;
+
+                        startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
+                        finish();
+
+                        break;
+
+                    case R.id.nav_category:
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_PHOTOS;
                         break;
                     case R.id.nav_sell_your_stuff:
-                        navItemIndex = 2;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_MOVIES;
                         break;
                     case R.id.nav_chat:
-                        navItemIndex = 3;
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
                         break;
                     case R.id.nav_settings:
-                        navItemIndex = 4;
+                        navItemIndex = 5;
                         CURRENT_TAG = TAG_SETTINGS;
                         break;
                     case R.id.help:
                         // launch new intent instead of loading fragment
-                       // startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+                        // startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
                         drawer.closeDrawers();
                         return true;
                     case R.id.logout:
                         // launch new intent instead of loading fragment
-                      //  startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+
+                        if ((mUser != null) && (mAuth != null)) {
+                            mAuth.signOut();
+                        }
+
                         drawer.closeDrawers();
+                        Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_LONG).show();
                         return true;
                     default:
                         navItemIndex = 0;
@@ -351,6 +356,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     private void selectNavMenu() {
         navigationView.getMenu().getItem(navItemIndex).setChecked(true);
     }
+
     private void loadHomeFragment() {
         // selecting appropriate nav menu item
         selectNavMenu();
@@ -362,12 +368,12 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         // just close the navigation drawer
 
 
-
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-      //  dribbblePrefs.addLoginStatusListener(filtersAdapter);
+        //  dribbblePrefs.addLoginStatusListener(filtersAdapter);
         checkConnectivity();
     }
 
@@ -396,16 +402,9 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        final MenuItem dribbbleLogin = menu.findItem(R.id.menu_dribbble_login);
-        if (dribbbleLogin != null) {
-            dribbbleLogin.setTitle(dribbblePrefs.isLoggedIn() ?
-                    R.string.dribbble_log_out : R.string.dribbble_login);
-        }
-        final MenuItem designerNewsLogin = menu.findItem(R.id.menu_designer_news_login);
-        if (designerNewsLogin != null) {
-            designerNewsLogin.setTitle(designerNewsPrefs.isLoggedIn() ?
-                    R.string.designer_news_log_out : R.string.designer_news_login);
-        }
+
+
+
         return true;
     }
 
@@ -422,30 +421,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
                         getString(R.string.transition_search_back)).toBundle();
                 startActivityForResult(new Intent(this, SearchActivity.class), RC_SEARCH, options);
                 return true;
-            case R.id.menu_dribbble_login:
-                if (!dribbblePrefs.isLoggedIn()) {
-                    dribbblePrefs.login(HomeActivity.this);
-                } else {
-                    dribbblePrefs.logout();
-                    // TODO something better than a toast!!
-                    Toast.makeText(getApplicationContext(), R.string.dribbble_logged_out, Toast
-                            .LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.menu_designer_news_login:
-                if (!designerNewsPrefs.isLoggedIn()) {
-                    startActivity(new Intent(this, DesignerNewsLogin.class));
-                } else {
-                    designerNewsPrefs.logout(HomeActivity.this);
-                    // TODO something better than a toast!!
-                    Toast.makeText(getApplicationContext(), R.string.designer_news_logged_out,
-                            Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.menu_about:
-                startActivity(new Intent(HomeActivity.this, AboutActivity.class),
-                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -453,13 +428,11 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     private ArrayList<AddDetail> getAdds() {
         ArrayList<AddDetail> details = new ArrayList<>();
-        for (int index=0; index<getFakeList().size();index++){
+        for (int index = 0; index < getFakeList().size(); index++) {
             details.add(new AddDetail(getFakeList().get(index)));
         }
         return details;
     }
-
-
 
 
     private ArrayList<String> getFakeList() {
@@ -517,12 +490,10 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     }
 
 
-
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawers();
-            return;
         }
     }
 
@@ -538,7 +509,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
         super.onDestroy();
     }
-
 
 
     private RecyclerView.OnScrollListener toolbarElevation = new RecyclerView.OnScrollListener() {
@@ -565,23 +535,35 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     @SuppressLint("RestrictedApi")
     @OnClick(R.id.fab)
     protected void fabClick() {
-        if (designerNewsPrefs.isLoggedIn()) {
-            Intent intent = new Intent(this, PostNewDesignerNewsStory.class);
-            FabTransform.addExtras(intent,
-                    ContextCompat.getColor(this, R.color.accent), R.drawable.ic_add_dark);
-            intent.putExtra(PostStoryService.EXTRA_BROADCAST_RESULT, true);
-            registerPostStoryResultListener();
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab,
-                    getString(R.string.transition_new_designer_news_post));
-            startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_STORY, options.toBundle());
+
+
+        // Get Logged in User instance and check if logged in.
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mUser != null) {
+            // Name, email address, and profile photo Url
+            String name = mUser.getDisplayName();
+            String email = mUser.getEmail();
+            Uri photoUrl = mUser.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = mUser.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getToken() instead.
+            String uid = mUser.getUid();
+
+            // Go to the add post activity
+            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
+            finish();
+
         } else {
-            Intent intent = new Intent(this, DesignerNewsLogin.class);
-            FabTransform.addExtras(intent,
-                    ContextCompat.getColor(this, R.color.accent), R.drawable.ic_add_dark);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, fab,
-                    getString(R.string.transition_designer_news_login));
-            startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+
+            // go to the login section.
+            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+            finish();
         }
+
     }
 
     BroadcastReceiver postStoryResultReceiver = new BroadcastReceiver() {
@@ -671,7 +653,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         if (fabPosting != null) return;
         fabPosting = (ImageButton) ((ViewStub) findViewById(R.id.stub_posting_progress)).inflate();
     }
-
 
 
     int getAuthSourceRequestCode(Source filter) {
@@ -786,10 +767,10 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     /**
      * Highlight the new source(s) by:
-     *      1. opening the drawer
-     *      2. scrolling new source(s) into view
-     *      3. flashing new source(s) background
-     *      4. closing the drawer (if user hasn't interacted with it)
+     * 1. opening the drawer
+     * 2. scrolling new source(s) into view
+     * 3. flashing new source(s) background
+     * 4. closing the drawer (if user hasn't interacted with it)
      */
     private void highlightNewSources(final Source... sources) {
         final Runnable closeDrawerRunnable = new Runnable() {
@@ -815,13 +796,13 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
                 List<Integer> filterPositions = new ArrayList<>(sources.length);
                 for (Source source : sources) {
                     if (source != null) {
-                       // filterPositions.add(filtersAdapter.getFilterPosition(source));
+                        // filterPositions.add(filtersAdapter.getFilterPosition(source));
                     }
                 }
                 int scrollTo = Collections.max(filterPositions);
-              //  filtersList.smoothScrollToPosition(scrollTo);
+                //  filtersList.smoothScrollToPosition(scrollTo);
                 for (int position : filterPositions) {
-                 //   filtersAdapter.highlightFilter(position);
+                    //   filtersAdapter.highlightFilter(position);
                 }
                 //filtersList.setOnTouchListener(filtersTouch);
             }
@@ -829,7 +810,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
             @Override
             public void onDrawerClosed(View drawerView) {
                 // reset
-              //  filtersList.setOnTouchListener(null);
+                //  filtersList.setOnTouchListener(null);
                 drawer.removeDrawerListener(this);
             }
 
@@ -865,7 +846,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
             connectivityManager.registerNetworkCallback(
                     new NetworkRequest.Builder()
-                    .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build(),
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build(),
                     connectivityCallback);
             monitoringConnectivity = true;
         }
