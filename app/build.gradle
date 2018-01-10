@@ -39,6 +39,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 ext.supportLibVersion = '26.0.1'
 ext.retrofit2Version = '2.2.0'
@@ -87,5 +91,13 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile project(path: ':library')
+    compile 'com.github.clans:fab:1.6.4'
+
+    compile 'com.github.dimorinny:floating-text-button:0.0.2'
+
+
+    compile 'com.siclo.ezphotopick:library:1.0.7'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
