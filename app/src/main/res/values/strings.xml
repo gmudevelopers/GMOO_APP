@@ -111,6 +111,13 @@
     <string name="friends">Friends</string>
     <string name="photos">Photos</string>
 
+    <string name="books_fab">books</string>
+    <string name="electronics_fab">electronics</string>
+    <string name="service_fab">services</string>
+    <string name="other_fab">other</string>
+    <string name="sports_and_fab">sports and outdoors</string>
+    <string name="furniture_fab">furniture</string>
+
 
     <string name="other_options_header">Other Options:</string>
     <string name="rational_image_perm">This sample will read an image from local storage to upload to Cloud Storage.</string>
@@ -278,6 +285,26 @@
         <item quantity="other">%s upvotes</item>
     </plurals>
 
+
+    <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
+    <string name="text_inside_circle_button_text_highlighted">Text Inside Circle Button(Highlighted)</string>
+    <string name="text_inside_circle_button_text_unable">Text Inside Circle Button(Unable)</string>
+
+    <string name="text_outside_circle_button_text_normal">Text Outside Circle Button(Normal)</string>
+    <string name="text_outside_circle_button_text_highlighted">Text Outside Circle Button(Highlighted)</string>
+    <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
+
+    <string name="text_ham_button_text_normal">Ham Button Text(Normal)</string>
+    <string name="text_ham_button_text_highlighted">Ham Button Text(Highlighted)</string>
+    <string name="text_ham_button_text_unable">Ham Button Text(Unable)</string>
+    <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
+    <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
+    <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
+    <string name="text_button_books">Books</string>
+    <string name="text_button_electronics">Electronics</string>
+    <string name="text_button_services">Services</string>
+    <string name="text_button_sports">Services</string>
+    <string name="text_button_furniture">Services</string>
 
     <!-- dribbble shot screen -->
     <!-- using strings for the number of views/likes as we run them through NumberFormat -->
@@ -717,5 +744,8 @@
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dictum lorem ac leo tincidunt varius. Donec lacinia elementum lobortis. Nulla pellentesque cursus sem. Aliquam vestibulum lacinia metus, ac faucibus nunc fringilla a. Nullam mauris lorem, pharetra vitae mollis in, gravida a mi. Sed eu elit vitae lorem vestibulum volutpat eget blandit tortor. Duis dignissim porta dolor, ut porttitor lectus pretium vitae.  Phasellus quis augue ante. Nam tempus egestas consectetur. Praesent nec placerat nisi, non malesuada dolor. Duis malesuada semper lorem, nec feugiat nisl. Nulla facilisi. Sed aliquam ex ut turpis malesuada dignissim. Nam risus mi, dapibus maximus nisl ac, efficitur suscipit ex. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec malesuada nisl eget faucibus mollis. Nam sit amet mauris a metus euismod porttitor et sed mi. Nunc vel vehicula arcu, eu lacinia odio. Fusce id lacus vel dui blandit maximus id eget neque.  Sed eu porta diam. Nunc vitae egestas diam. Donec semper hendrerit laoreet. Aliquam quis aliquam nulla. Aenean euismod lacus sed pretium scelerisque. Suspendisse mollis arcu at ligula pulvinar, nec elementum velit fermentum. Sed sed mollis ligula, vel eleifend metus. Sed magna metus, tempus ut bibendum at, aliquam at nisi. Integer nec fringilla mauris, vel viverra augue. Morbi eu mi mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.  Proin molestie ante nec tristique finibus. In hac habitasse platea dictumst. Maecenas sed risus condimentum, feugiat velit ac, dictum erat. Curabitur pharetra ac nulla sed lacinia. Curabitur rutrum dolor vestibulum magna ultrices congue ac sed libero. Nam semper mi a neque ultricies commodo. In condimentum in odio in porttitor. Suspendisse maximus vestibulum nunc, vel gravida dui fermentum eu. Morbi sed orci augue. Praesent dolor justo, cursus sit amet ex et, posuere mattis lorem. Donec in efficitur orci. Nam semper odio a interdum aliquet. Vivamus vitae luctus purus, in fermentum diam. Pellentesque quis orci vitae est placerat faucibus. Maecenas non gravida ipsum, sit amet ultrices sem. Phasellus fringilla ultrices erat, vel aliquam sapien varius ac.  Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam porta semper sapien. Pellentesque volutpat porta sapien, ut tristique metus. In hac habitasse platea dictumst. Aenean pharetra molestie dapibus. Nunc sed dolor elit. Quisque eget enim non tellus volutpat mollis a id dolor. Aenean sit amet sem sem. Nunc viverra efficitur lorem. Quisque quis metus dictum, mattis ante non, pellentesque sapien. Integer quis lectus feugiat, consectetur nulla quis, viverra nulla. Curabitur eu sodales nisl. Morbi non enim pellentesque, lobortis est id, dignissim mauris. Nulla et tempor lectus.</string>
     <string name="action_example_scrolling_search_bar">scrolling behavior</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_select_category">SelectCategoryActivity</string>
+    <string name="title_activity_post_add">PostAddActivity</string>
+    <string name="post_offer">post offer</string>
 
 </resources>
