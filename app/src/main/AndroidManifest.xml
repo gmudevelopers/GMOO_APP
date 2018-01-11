@@ -66,6 +66,7 @@
             android:exported="true"
             android:label="SignIn" />
         <activity android:name=".ui.galleryImplementation.activity.MediaGalleryActivity" />
+        <activity android:name=".activities.AddPostActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme" />

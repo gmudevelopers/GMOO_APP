@@ -32,6 +32,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -80,6 +81,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
 import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
+import gmoo.com.gmudevelopers.edu.gmoo.auth.UserSignIn;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.PostStoryService;
@@ -228,12 +230,20 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         postAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
-                FabTransform.addExtras(intent,
-                        ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
-                        getString(R.string.transition_designer_news_login));
-                startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+
+                if (isSignedIn(mUser)) {
+
+                    Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
+                    FabTransform.addExtras(intent,
+                            ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
+                            getString(R.string.transition_designer_news_login));
+                    startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+                } else {
+
+                    startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                    finish();
+                }
             }
         });
 
@@ -298,8 +308,13 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_POST_ADD;
 
-                        startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
-                        finish();
+                        if (isSignedIn(mUser)) {
+                            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                            finish();
+                        }
 
                         break;
 
@@ -551,11 +566,8 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
             }
         }
     };
-/*
-    @SuppressLint("RestrictedApi")
-    @OnClick(R.id.fab)
-    protected void fabClick() {
 
+    private boolean isSignedIn(FirebaseUser user) {
 
         // Get Logged in User instance and check if logged in.
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -573,18 +585,14 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
             // FirebaseUser.getToken() instead.
             String uid = mUser.getUid();
 
-            // Go to the add post activity
-            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
-            finish();
+            return true;
 
         } else {
 
-            // go to the login section.
-            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
-            finish();
+            return false;
         }
 
-    }*/
+    }
 
     BroadcastReceiver postStoryResultReceiver = new BroadcastReceiver() {
         @Override
