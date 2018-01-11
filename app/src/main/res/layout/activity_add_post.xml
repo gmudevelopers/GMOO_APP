@@ -6,52 +6,32 @@
     android:layout_height="match_parent"
     tools:context="gmoo.com.gmudevelopers.edu.gmoo.activities.AddPostActivity">
 
-    <ImageButton
-        android:id="@+id/addPostImageBtn"
-        android:layout_width="364dp"
-        android:layout_height="299dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@mipmap/add_btn"
-        android:cropToPadding="true"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <EditText
         android:id="@+id/postTitle"
-        android:background="@drawable/input_outline"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="244dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/add_post_title"
         android:inputType="textPersonName"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPostImageBtn"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/postDescription"
         android:layout_width="0dp"
-        android:layout_height="78dp"
+        android:layout_height="61dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/input_outline"
+
         android:ems="10"
         android:hint="@string/add_post_description"
         android:inputType="textPersonName"
@@ -116,5 +96,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.966"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/addPostImageView"
+        android:layout_width="0dp"
+        android:layout_height="268dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/postTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.058"
+        app:srcCompat="@mipmap/add_btn" />
 
 </android.support.constraint.ConstraintLayout>

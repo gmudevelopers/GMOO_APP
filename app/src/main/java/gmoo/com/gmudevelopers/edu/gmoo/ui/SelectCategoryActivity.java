@@ -28,6 +28,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.select_category_diaglog);
 
         mRecyclerView = findViewById(R.id.category);
@@ -37,6 +38,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+
         mRecyclerView.addItemDecoration(itemDecoration);
 
         // use a linear layout manager
@@ -44,26 +46,23 @@ public class SelectCategoryActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        RecyclerViewClickListener listener = (view, position) -> {
-            Toast.makeText(this, "[" + position + "]", Toast.LENGTH_SHORT).show();
-        };
+//        RecyclerViewClickListener listener = (view, position) -> {
+////            Toast.makeText(this, "[" + position + "]", Toast.LENGTH_SHORT).show();
+//        };
 
         mAdapter = new SelectCategory_Adapter(items());
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(
 
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Toast.makeText(SelectCategoryActivity.this, "[" + position + "]", Toast.LENGTH_SHORT).show();
+                new RecyclerItemClickListener(this, (view, position) -> {
+//                    Toast.makeText(SelectCategoryActivity.this, "[" + position + "]", Toast.LENGTH_SHORT).show();
+//
+//                    SelectCategoryItem item = items().get(position);
+//                    Toast.makeText(SelectCategoryActivity.this, "Starting activity" + item.getText(), Toast.LENGTH_LONG).show();
 
-                        SelectCategoryItem item = items().get(position);
-                        Toast.makeText(SelectCategoryActivity.this, "Starting activity" + item.getText(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(SelectCategoryActivity.this, AddPostActivity.class));
 
-                        startActivity(new Intent(SelectCategoryActivity.this, AddPostActivity.class));
-
-                    }
                 })
         );
 

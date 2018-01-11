@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +47,7 @@ public class AddPostActivity extends AppCompatActivity {
     public static final int SELECT_FILE = 0;
     public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 12;
 
-    private ImageButton mPostImage;
+    private ImageView mPostImage;
 
     private EditText mPostTitle;
     private EditText mPostDescription;
@@ -83,7 +83,7 @@ public class AddPostActivity extends AppCompatActivity {
         mDatabaseReference = mPostDatabase.getReference().child("Post Adds");
         mDatabaseReference.keepSynced(true);
 
-        mPostImage = findViewById(R.id.addPostImageBtn);
+        mPostImage = findViewById(R.id.addPostImageView);
         mPostTitle = findViewById(R.id.postTitle);
         mPostDescription = findViewById(R.id.postDescription);
         Button mAddPostButton = findViewById(R.id.addPostBtn);
@@ -141,12 +141,11 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * All results returned by the Activity is handled here.
      *
      * @param requestCode - uniquely identify the appropriate request processed.
-     * @param resultCode - the status of the request on return if success or failure.
-     * @param data - the data returned.
+     * @param resultCode  - the status of the request on return if success or failure.
+     * @param data        - the data returned.
      */
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -189,8 +188,8 @@ public class AddPostActivity extends AppCompatActivity {
     /**
      * Permissions can be requested and the expected response from user is retrieved here.
      *
-     * @param requestCode - code to locate the appropriate permission requested
-     * @param permissions - the permission requested to be granted by user
+     * @param requestCode  - code to locate the appropriate permission requested
+     * @param permissions  - the permission requested to be granted by user
      * @param grantResults - the results received per user's response.
      */
     @Override
@@ -222,7 +221,7 @@ public class AddPostActivity extends AppCompatActivity {
      * Helper method to convert Bitmap to Uri to be stored in database along with user's post.
      *
      * @param inContext - Current context for the URI
-     * @param inImage - Bitmap (bmp) to be converted to Uri.
+     * @param inImage   - Bitmap (bmp) to be converted to Uri.
      * @return the requested URI of the Bitmap.
      */
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -235,7 +234,7 @@ public class AddPostActivity extends AppCompatActivity {
     /**
      * This is method for writing user's data to the database. Data must be populated and instantiated
      * before this method can successfully process.
-     *
+     * <p>
      * User must be logged in for a successful post to database.
      */
     private void startPosting() {
