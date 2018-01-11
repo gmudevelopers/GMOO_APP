@@ -1,12 +1,9 @@
-package gmoo.com.gmudevelopers.edu.gmoo;
+package gmoo.com.gmudevelopers.edu.gmoo.activities;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;

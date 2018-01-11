@@ -6,6 +6,12 @@
             android:id="@+id/home"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/browse_add" />
+
+        <item
+            android:id="@+id/nav_post_add"
+            android:icon="@drawable/ic_inbox_black_24dp"
+            android:title="@string/post_add" />
+
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/ic_photo_library_black_24dp"
