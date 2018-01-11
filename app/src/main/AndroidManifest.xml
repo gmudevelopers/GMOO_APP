@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2015 Google Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
        http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,11 +38,10 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Plaid.Home" />
-        <activity
-            android:name=".auth.UserSignIn"
-            android:exported="true"
-            android:label="SignIn"
-            android:theme="@style/Plaid.Home" />
+        <!--
+ Use an alias in case we want to change the launch activity later without breaking
+             homescreen shortcuts. Note must be defined after the targetActivity
+        -->
         <!--
  Use an alias in case we want to change the launch activity later without breaking
              homescreen shortcuts. Note must be defined after the targetActivity
@@ -66,8 +62,13 @@
         </activity-alias>
 
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".auth.UserSignIn"
+            android:exported="true"
+            android:label="SignIn" />
+        <activity android:name=".ui.galleryImplementation.activity.MediaGalleryActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.DribbbleShot"
             android:parentActivityName=".ui.HomeActivity"
@@ -180,8 +181,12 @@
             android:value="GlideModule" />
 
         <activity
-            android:name=".auth.Main2Activity"
-            android:label="@string/title_activity_main2"
+            android:name=".ui.SelectCategoryActivity"
+            android:label="@string/title_activity_select_category"
+            android:theme="@style/Plaid" />
+        <activity
+            android:name=".ui.PostAdd.PostAddActivity"
+            android:label="@string/title_activity_post_add"
             android:theme="@style/Plaid"></activity>
     </application>
 
