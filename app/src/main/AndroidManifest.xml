@@ -15,6 +15,7 @@
     package="gmoo.com.gmudevelopers.edu.gmoo"
     android:installLocation="auto">
 
+    <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
