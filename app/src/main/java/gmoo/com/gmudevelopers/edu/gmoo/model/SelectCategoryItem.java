@@ -12,8 +12,9 @@ import gmoo.com.gmudevelopers.edu.gmoo.adapters.SelectCategory_Adapter;
 
 public class SelectCategoryItem {
     String text;
-   Drawable image;
-    public SelectCategoryItem(String text, Drawable image){
+    Drawable image;
+
+    public SelectCategoryItem(String text, Drawable image) {
         this.text = text;
         this.image = image;
     }

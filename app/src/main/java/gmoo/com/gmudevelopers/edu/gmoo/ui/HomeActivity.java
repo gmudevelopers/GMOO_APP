@@ -32,6 +32,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -80,6 +81,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
 import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
+import gmoo.com.gmudevelopers.edu.gmoo.auth.UserSignIn;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.PostStoryService;
@@ -190,9 +192,9 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
         //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
+        RecyclerView recyclerView = findViewById(R.id.grid);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -225,15 +227,20 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
-        postAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        postAdd.setOnClickListener(view -> {
+
+            if (isSignedIn(mUser)) {
+
                 Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
                 FabTransform.addExtras(intent,
                         ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
                         getString(R.string.transition_designer_news_login));
                 startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+            } else {
+
+                startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                finish();
             }
         });
 
@@ -298,8 +305,13 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_POST_ADD;
 
-                        startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
-                        finish();
+                        if (isSignedIn(mUser)) {
+                            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                            finish();
+                        }
 
                         break;
 
@@ -551,11 +563,8 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
             }
         }
     };
-/*
-    @SuppressLint("RestrictedApi")
-    @OnClick(R.id.fab)
-    protected void fabClick() {
 
+    private boolean isSignedIn(FirebaseUser user) {
 
         // Get Logged in User instance and check if logged in.
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -573,18 +582,14 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
             // FirebaseUser.getToken() instead.
             String uid = mUser.getUid();
 
-            // Go to the add post activity
-            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
-            finish();
+            return true;
 
         } else {
 
-            // go to the login section.
-            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
-            finish();
+            return false;
         }
 
-    }*/
+    }
 
     BroadcastReceiver postStoryResultReceiver = new BroadcastReceiver() {
         @Override
