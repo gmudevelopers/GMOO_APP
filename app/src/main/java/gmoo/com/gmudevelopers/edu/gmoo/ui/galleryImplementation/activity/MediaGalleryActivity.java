@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import gmoo.com.gmudevelopers.edu.gmoo.R;
@@ -20,7 +21,7 @@ public class MediaGalleryActivity extends BaseActivity implements ViewPager.OnPa
     private CustomViewPager mViewPager;
     private RecyclerView imagesHorizontalList;
     private HorizontalListAdapters hAdapter;
-    private RelativeLayout mMainLayout;
+    private FrameLayout mMainLayout;
 
     @Override
     protected int getResourceLayoutId() {
@@ -45,7 +46,7 @@ public class MediaGalleryActivity extends BaseActivity implements ViewPager.OnPa
     private void initViews() {
         mViewPager = (CustomViewPager) findViewById(R.id.pager);
         imagesHorizontalList = (RecyclerView) findViewById(R.id.imagesHorizontalList);
-        mMainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+        mMainLayout = (FrameLayout) findViewById(R.id.comments_container);
         if (backgroundColor != -1){
             mMainLayout.setBackgroundColor(ContextCompat.getColor(this,backgroundColor));
         }

@@ -20,14 +20,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
@@ -39,22 +37,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
@@ -64,11 +59,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.view.WindowInsets;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -79,41 +71,37 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import br.liveo.interfaces.OnItemClickListener;
-import br.liveo.navigationliveo.NavigationLiveo;
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
+import gmoo.com.gmudevelopers.edu.gmoo.adapters.SelectCategory_Adapter;
 import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
-import gmoo.com.gmudevelopers.edu.gmoo.data.PlaidItem;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.PostStoryService;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.model.Story;
-import gmoo.com.gmudevelopers.edu.gmoo.data.pocket.PocketUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DesignerNewsPrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DribbblePrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.SourceManager;
 import gmoo.com.gmudevelopers.edu.gmoo.model.AddDetail;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.FilterTouchHelperCallback;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.GridItemDividerDecoration;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.recyclerview.InfiniteScrollListener;
+import gmoo.com.gmudevelopers.edu.gmoo.model.SelectCategoryItem;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.FabTransform;
-import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.MorphTransform;
 import gmoo.com.gmudevelopers.edu.gmoo.util.AnimUtils;
-import gmoo.com.gmudevelopers.edu.gmoo.util.ViewUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.util.glide.CircleTransform;
+import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 
-public class HomeActivity extends Activity implements  AdapterView.OnItemClickListener {
+public class HomeActivity extends Activity implements  AdapterView.OnItemClickListener,View.OnClickListener{
 
     private static final int RC_SEARCH = 0;
     private static final int RC_AUTH_DRIBBBLE_FOLLOWING = 1;
@@ -154,9 +142,12 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     DrawerLayout drawer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
+/*
     @BindView(R.id.fab)
     ImageButton fab;
+
+
+    */
     @BindView(R.id.grid)
     RecyclerView recyclerView;
     @Nullable
@@ -165,6 +156,11 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.post_offer)
+    FloatingTextButton postAdd;
+
+
     @Nullable
     @BindView(R.id.no_connection)
     ImageView noConnection;
@@ -189,6 +185,9 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
+
+
+
       //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
       //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
@@ -201,7 +200,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         recyclerView.setLayoutManager(layoutManager);
         loading.setIndeterminate(false);
 
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         ArrayList<AddDetail> addList = getAdds();
         StaggeredAdapter staggeredAdapter = new StaggeredAdapter(addList);
         recyclerView.setAdapter(staggeredAdapter);
@@ -225,6 +224,18 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         designerNewsPrefs = DesignerNewsPrefs.get(this);
 
 
+     postAdd.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View view) {
+             Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
+             FabTransform.addExtras(intent,
+                     ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
+             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
+                     getString(R.string.transition_designer_news_login));
+             startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+         }
+     });
+
      //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
 
         setupTaskDescription();
@@ -243,6 +254,8 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
 
     }
+
+
     private void loadNavHeader() {
         // name, website
         txtName.setText("Ravi Tamada");
@@ -459,9 +472,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         return details;
     }
 
-
-
-
     private ArrayList<String> getFakeList() {
         ArrayList<String> imagesList = new ArrayList<>();
         imagesList.add("http://static0.passel.co/wp-content/uploads/2016/12/23193634/tumblr_oiboua3s6F1slhhf0o1_500.jpg");
@@ -561,7 +571,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
             }
         }
     };
-
+/*
     @SuppressLint("RestrictedApi")
     @OnClick(R.id.fab)
     protected void fabClick() {
@@ -582,7 +592,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
                     getString(R.string.transition_designer_news_login));
             startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
         }
-    }
+    }*/
 
     BroadcastReceiver postStoryResultReceiver = new BroadcastReceiver() {
         @Override
@@ -769,6 +779,8 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         }
     }
 
+    /*
+
     private void showFab() {
         fab.setAlpha(0f);
         fab.setScaleX(0f);
@@ -784,6 +796,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
                 .start();
     }
 
+*/
     /**
      * Highlight the new source(s) by:
      *      1. opening the drawer
@@ -897,5 +910,19 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.post_offer :
+                Intent intent = new Intent(this, SelectCategoryActivity.class);
+                FabTransform.addExtras(intent,
+                        ContextCompat.getColor(this, R.color.accent), R.drawable.ic_add_dark);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, postAdd,
+                        getString(R.string.transition_designer_news_login));
+                startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+        }
     }
 }
