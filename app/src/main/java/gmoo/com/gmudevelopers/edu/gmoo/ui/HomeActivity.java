@@ -192,9 +192,9 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         //  StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
         //  drawer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.grid);
+        RecyclerView recyclerView = findViewById(R.id.grid);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
 
         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
@@ -227,23 +227,20 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
-        postAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        postAdd.setOnClickListener(view -> {
 
-                if (isSignedIn(mUser)) {
+            if (isSignedIn(mUser)) {
 
-                    Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
-                    FabTransform.addExtras(intent,
-                            ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
-                            getString(R.string.transition_designer_news_login));
-                    startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
-                } else {
+                Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
+                FabTransform.addExtras(intent,
+                        ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
+                        getString(R.string.transition_designer_news_login));
+                startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+            } else {
 
-                    startActivity(new Intent(HomeActivity.this, UserSignIn.class));
-                    finish();
-                }
+                startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                finish();
             }
         });
 
