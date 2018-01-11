@@ -25,7 +25,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.net.ConnectivityManager;
@@ -33,7 +32,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -44,7 +42,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Spannable;
@@ -72,8 +69,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,9 +79,7 @@ import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gmoo.com.gmudevelopers.edu.gmoo.R;
-import gmoo.com.gmudevelopers.edu.gmoo.adapters.SelectCategory_Adapter;
 import gmoo.com.gmudevelopers.edu.gmoo.adapters.StaggeredAdapter;
-import gmoo.com.gmudevelopers.edu.gmoo.auth.UserSignIn;
 import gmoo.com.gmudevelopers.edu.gmoo.data.DataManager;
 import gmoo.com.gmudevelopers.edu.gmoo.data.Source;
 import gmoo.com.gmudevelopers.edu.gmoo.data.api.designernews.PostStoryService;
@@ -94,14 +88,13 @@ import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DesignerNewsPrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.DribbblePrefs;
 import gmoo.com.gmudevelopers.edu.gmoo.data.prefs.SourceManager;
 import gmoo.com.gmudevelopers.edu.gmoo.model.AddDetail;
-import gmoo.com.gmudevelopers.edu.gmoo.model.SelectCategoryItem;
 import gmoo.com.gmudevelopers.edu.gmoo.ui.transitions.FabTransform;
 import gmoo.com.gmudevelopers.edu.gmoo.util.AnimUtils;
 import gmoo.com.gmudevelopers.edu.gmoo.util.glide.CircleTransform;
 import ru.dimorinny.floatingtextbutton.FloatingTextButton;
 
 
-public class HomeActivity extends Activity implements  AdapterView.OnItemClickListener,View.OnClickListener{
+public class HomeActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private static final int RC_SEARCH = 0;
     private static final int RC_AUTH_DRIBBBLE_FOLLOWING = 1;
@@ -143,12 +136,12 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     DrawerLayout drawer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-/*
-    @BindView(R.id.fab)
-    ImageButton fab;
+    /*
+        @BindView(R.id.fab)
+        ImageButton fab;
 
 
-    */
+        */
     @BindView(R.id.grid)
     RecyclerView recyclerView;
     @Nullable
@@ -230,21 +223,21 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
         designerNewsPrefs = DesignerNewsPrefs.get(this);
 
 
-     //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
-     postAdd.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View view) {
-             Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
-             FabTransform.addExtras(intent,
-                     ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
-             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
-                     getString(R.string.transition_designer_news_login));
-             startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
-         }
-     });
+        //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
+        postAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
+                FabTransform.addExtras(intent,
+                        ContextCompat.getColor(HomeActivity.this, R.color.accent), R.drawable.ic_add_dark);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, postAdd,
+                        getString(R.string.transition_designer_news_login));
+                startActivityForResult(intent, RC_NEW_DESIGNER_NEWS_LOGIN, options.toBundle());
+            }
+        });
 
-     //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
+        //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
 
         setupTaskDescription();
         // load nav menu header data
@@ -260,7 +253,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
 
     }
-
 
 
     private void loadNavHeader() {
@@ -432,7 +424,6 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
 
 
         return true;
@@ -797,6 +788,7 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
     }
 
 */
+
     /**
      * Highlight the new source(s) by:
      * 1. opening the drawer
@@ -915,8 +907,8 @@ public class HomeActivity extends Activity implements  AdapterView.OnItemClickLi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.post_offer :
+        switch (view.getId()) {
+            case R.id.post_offer:
                 Intent intent = new Intent(this, SelectCategoryActivity.class);
                 FabTransform.addExtras(intent,
                         ContextCompat.getColor(this, R.color.accent), R.drawable.ic_add_dark);
