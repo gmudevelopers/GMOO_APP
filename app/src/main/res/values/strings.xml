@@ -757,5 +757,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dictum lorem 
     <string name="title_activity_select_category">SelectCategoryActivity</string>
     <string name="title_activity_post_add">PostAddActivity</string>
     <string name="post_offer">post offer</string>
+    <string name="title_activity_select_photo">SelectPhotoActivity</string>
+    <string name="action_delete">delete</string>
+    <string name="done">done</string>
+    <string name="select_photo">Select Photo</string>
 
 </resources>

@@ -37,7 +37,7 @@
     <color name="background_dark">#ff333333</color>
     <color name="immersive_bars">#99000000</color>
     <color name="light_immersive_bars">@color/immersive_bars</color>
-    <color name="status_bar_back">#ff676767</color> <!-- this is blended with immersive_bars to produce the desired status bar color i.e. background_super_dark -->
+    <color name="status_bar_back">@color/Red</color> <!-- this is blended with immersive_bars to produce the desired status bar color i.e. background_super_dark -->
     <color name="background_super_dark">#ff292929</color>
     <color name="scrim">#99323232</color>
     <color name="mid_grey">#40808080</color>

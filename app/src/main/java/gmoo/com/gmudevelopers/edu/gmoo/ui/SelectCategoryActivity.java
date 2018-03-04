@@ -1,9 +1,13 @@
 package gmoo.com.gmudevelopers.edu.gmoo.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import gmoo.com.gmudevelopers.edu.gmoo.R;
@@ -19,6 +24,7 @@ import gmoo.com.gmudevelopers.edu.gmoo.adapters.SelectCategory_Adapter;
 import gmoo.com.gmudevelopers.edu.gmoo.helpers.RecyclerItemClickListener;
 import gmoo.com.gmudevelopers.edu.gmoo.helpers.RecyclerViewClickListener;
 import gmoo.com.gmudevelopers.edu.gmoo.model.SelectCategoryItem;
+import gmoo.com.gmudevelopers.edu.gmoo.ui.PostAdd.SelectPhotoActivity;
 
 public class SelectCategoryActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -53,7 +59,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
 
         mRecyclerView.addOnItemTouchListener(
 
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemClickListener(this,   mRecyclerView,  new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         Toast.makeText(SelectCategoryActivity.this, "[" + position + "]", Toast.LENGTH_SHORT).show();
@@ -61,7 +67,12 @@ public class SelectCategoryActivity extends AppCompatActivity {
                         SelectCategoryItem item = items().get(position);
                         Toast.makeText(SelectCategoryActivity.this, "Starting activity" + item.getText(), Toast.LENGTH_LONG).show();
 
-                        startActivity(new Intent(SelectCategoryActivity.this, AddPostActivity.class));
+                        startActivity(new Intent(SelectCategoryActivity.this, SelectPhotoActivity.class));
+
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
 
                     }
                 })
@@ -88,5 +99,7 @@ public class SelectCategoryActivity extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED);
         finishAfterTransition();
     }
+
+
 
 }

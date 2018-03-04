@@ -14,7 +14,7 @@
   limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
@@ -169,6 +169,8 @@
     <style name="ThemeOverlay.MyTitleText" parent="AppTheme">
         <item name="android:gravity">center</item>
         <item name="android:textSize">36sp</item>
+        <item name="colorAccent">@color/white</item>
+
     </style>
 
     <style name="Plaid.Translucent.PostDesignerNewsStory">
@@ -512,6 +514,10 @@
     <style name="LightRippleOverlay">
         <item name="android:colorControlHighlight">@color/ripple_light</item>
     </style>
+    <style name="SizeSpecificCollapsingToolbarLayout">
+        <item name="layout_scrollFlags">scroll</item>
+        <item name="contentScrim">@color/primary</item>
+    </style>
 
     <style name="MenuLabelsStyle">
         <item name="android:background">@drawable/fab_label_background</item>
@@ -552,6 +558,43 @@
 
     <style name="Plaid.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Plaid.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Plaid.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="toolTheme"  parent="Theme.AppCompat.Light">
+        <item name="actionModeStyle">@style/CustomActionMode</item>
+        <item name="android:actionModeCloseDrawable">@drawable/ic_stat_arrow_back</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="background">@color/Red</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+        <item name="android:title">Select Photos</item>
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:titleTextColor" tools:targetApi="m">@color/white</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+    <style name="CustomActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/Red</item>
+        <item name="iconTint">@color/white</item>
+
+    </style>
+    <style name="MyTheme.ActionBar.TitleTextStyle" parent="@style/ThemeOverlay.MyTitleText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <!-- ActionBar title text -->
+
+    <style name="MyActionBarTitleText"
+
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+
+        <item name="android:textColor">@color/white</item>
+
+    </style>
 
 </resources>
