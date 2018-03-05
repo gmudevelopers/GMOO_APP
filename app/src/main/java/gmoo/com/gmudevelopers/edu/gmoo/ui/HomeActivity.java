@@ -229,7 +229,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         //   adapter = new FeedAdapter(this, dataManager, columns, PocketUtils.isPocketInstalled(this));
         postAdd.setOnClickListener(view -> {
 
-            if (isSignedIn(mUser)) {
+            if (isSignedIn()) {
 
                 Intent intent = new Intent(HomeActivity.this, SelectCategoryActivity.class);
                 FabTransform.addExtras(intent,
@@ -264,8 +264,18 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Ravi Tamada");
-        txtWebsite.setText("www.androidhive.info");
+
+        if (isSignedIn()) {
+
+            txtName.setText(mUser.getDisplayName());
+            txtWebsite.setText(mUser.getEmail());
+
+        } else {
+
+            txtName.setText("Ravi Tamada");
+            txtWebsite.setText("www.androidhive.info");
+
+        }
 
         // loading header background image
         Glide.with(this).load(urlNavHeaderBg)
@@ -305,7 +315,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_POST_ADD;
 
-                        if (isSignedIn(mUser)) {
+                        if (isSignedIn()) {
                             startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
                             finish();
                         } else {
@@ -318,6 +328,15 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                     case R.id.nav_category:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_PHOTOS;
+
+                        if (isSignedIn()) {
+                            startActivity(new Intent(HomeActivity.this, SelectCategoryActivity.class));
+                            finish();
+                        } else {
+                            startActivity(new Intent(HomeActivity.this, UserSignIn.class));
+                            finish();
+                        }
+
                         break;
                     case R.id.nav_sell_your_stuff:
                         navItemIndex = 3;
@@ -381,7 +400,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         };
 
         //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
@@ -436,8 +455,6 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
-
         return true;
     }
 
@@ -564,7 +581,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         }
     };
 
-    private boolean isSignedIn(FirebaseUser user) {
+    private boolean isSignedIn() {
 
         // Get Logged in User instance and check if logged in.
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -714,7 +731,7 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         if (visibility == View.VISIBLE) {
             if (noFiltersEmptyText == null) {
                 // create the no filters empty text
-                ViewStub stub = (ViewStub) findViewById(R.id.stub_no_filters);
+                ViewStub stub = findViewById(R.id.stub_no_filters);
                 noFiltersEmptyText = (TextView) stub.inflate();
                 String emptyText = getString(R.string.no_filters_selected);
                 int filterPlaceholderStart = emptyText.indexOf('\u08B4');
@@ -774,25 +791,6 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
                     .setInterpolator(AnimUtils.getFastOutSlowInInterpolator(this));
         }
     }
-
-    /*
-
-    private void showFab() {
-        fab.setAlpha(0f);
-        fab.setScaleX(0f);
-        fab.setScaleY(0f);
-        fab.setTranslationY(fab.getHeight() / 2);
-        fab.animate()
-                .alpha(1f)
-                .scaleX(1f)
-                .scaleY(1f)
-                .translationY(0f)
-                .setDuration(300L)
-                .setInterpolator(AnimUtils.getLinearOutSlowInInterpolator(this))
-                .start();
-    }
-
-*/
 
     /**
      * Highlight the new source(s) by:
@@ -887,14 +885,11 @@ public class HomeActivity extends Activity implements AdapterView.OnItemClickLis
         public void onAvailable(Network network) {
             connected = true;
             if (adapter.getDataItemCount() != 0) return;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    TransitionManager.beginDelayedTransition(drawer);
-                    noConnection.setVisibility(View.GONE);
-                    loading.setVisibility(View.VISIBLE);
-                    dataManager.loadAllDataSources();
-                }
+            runOnUiThread(() -> {
+                TransitionManager.beginDelayedTransition(drawer);
+                noConnection.setVisibility(View.GONE);
+                loading.setVisibility(View.VISIBLE);
+                dataManager.loadAllDataSources();
             });
         }
 
